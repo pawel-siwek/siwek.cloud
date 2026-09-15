@@ -37,6 +37,15 @@
   .reveal { opacity: 0; transform: translateY(16px); transition: opacity .55s ease, transform .55s ease; }
   .reveal.on { opacity: 1; transform: translateY(0); }
   .bar { transform-origin: left; animation: trace .8s cubic-bezier(.2,.8,.2,1) both; }
+  /* RWD: narrow screens only — nothing below changes layout at >= 768px */
+  @media (max-width: 767.98px) {
+    .site-header { flex-wrap: wrap !important; justify-content: flex-start !important; gap: 14px 24px; }
+    .site-nav { flex-wrap: wrap !important; gap: 10px 18px !important; }
+    .talk-card { grid-template-columns: minmax(0, 1fr) !important; gap: 16px !important; padding: 20px !important; }
+    .talk-actions { min-width: 0 !important; }
+    .talk-title { font-size: clamp(1.6rem, 7vw, 2.25rem) !important; overflow-wrap: break-word; }
+    .talk-meta { gap: 6px 12px !important; }
+  }
 </style>
 </helmet>
 
@@ -46,7 +55,7 @@
   <div style="position: fixed; left: 0; right: 0; height: 160px; pointer-events: none; z-index: 3; background: linear-gradient(180deg, rgba(91,201,176,0) 0%, rgba(91,201,176,0.045) 50%, rgba(91,201,176,0) 100%); animation: scan 8s linear infinite;"></div>
   <div style="position: absolute; top: -260px; left: 50%; width: 1200px; height: 680px; transform: translateX(-50%); pointer-events: none; background: radial-gradient(50% 50% at 50% 50%, rgba(41,182,246,0.12) 0%, rgba(11,14,24,0) 70%);"></div>
 
-  <header style="width: 100%; max-width: 1120px; display: flex; justify-content: space-between; align-items: center; padding: 26px 0; position: relative; z-index: 2;">
+  <header class="site-header" style="width: 100%; max-width: 1120px; display: flex; justify-content: space-between; align-items: center; padding: 26px 0; position: relative; z-index: 2;">
     <a href="/" style="display: flex; align-items: center; gap: 14px;">
       <img src="/logo/siwek-cloud-mark.svg" alt="siwek.cloud" style="width: 40px; height: 40px; image-rendering: pixelated;">
       <div style="display: flex; flex-direction: column; gap: 2px;">
@@ -54,7 +63,7 @@
         <span style="font-family: 'Archivo Narrow', sans-serif; font-size: 10px; letter-spacing: 0.2em; color: #6C7285;">PRINCIPAL PRODUCT ARCHITECT · DYNATRACE · AZURE MVP</span>
       </div>
     </a>
-    <nav style="display: flex; gap: 22px; align-items: center; font-family: 'Archivo Narrow', sans-serif; font-size: 13px; letter-spacing: 0.14em; text-transform: uppercase;">
+    <nav class="site-nav" style="display: flex; gap: 22px; align-items: center; font-family: 'Archivo Narrow', sans-serif; font-size: 13px; letter-spacing: 0.14em; text-transform: uppercase;">
       <a href="/" style="color: #C5C6CB;">Play</a>
       <a href="#talks" style="color: #C5C6CB;">Talks</a>
       <a href="#code" style="color: #C5C6CB;">Open source</a>
@@ -78,63 +87,63 @@
       <h2 style="margin: 0; font-family: Anton, sans-serif; font-size: 30px; text-transform: uppercase;">Talks I give</h2>
     </div>
 
-    <div class="reveal" style="display: grid; grid-template-columns: minmax(0, 1fr) auto; gap: 20px; align-items: start; background: #121829; border: 1px solid #26304B; border-left: 3px solid #5BC9B0; padding: 24px;" style-hover="border-color: #5BC9B0;">
+    <div class="reveal talk-card" style="display: grid; grid-template-columns: minmax(0, 1fr) auto; gap: 20px; align-items: start; background: #121829; border: 1px solid #26304B; border-left: 3px solid #5BC9B0; padding: 24px;" style-hover="border-color: #5BC9B0;">
       <div style="display: flex; flex-direction: column; gap: 10px; min-width: 0;">
-        <div style="display: flex; flex-wrap: wrap; gap: 12px; align-items: baseline; font-family: 'Archivo Narrow', sans-serif; font-size: 12px; letter-spacing: 0.16em; color: #6C7285;">
+        <div class="talk-meta" style="display: flex; flex-wrap: wrap; gap: 12px; align-items: baseline; font-family: 'Archivo Narrow', sans-serif; font-size: 12px; letter-spacing: 0.16em; color: #6C7285;">
           <span style="color: #5BC9B0;">EN</span><span>CONFERENCE TALK</span><span>45–60 MIN</span>
         </div>
-        <span style="font-family: Anton, sans-serif; font-size: 26px; line-height: 1.06; text-transform: uppercase;">Well-Architected — <span style="color: #5BC9B0;">Cost Optimization in practice</span></span>
+        <span class="talk-title" style="font-family: Anton, sans-serif; font-size: 26px; line-height: 1.06; text-transform: uppercase;">Well-Architected — <span style="color: #5BC9B0;">Cost Optimization in practice</span></span>
         <span style="font-size: 15px; line-height: 1.6; color: #C5C6CB;">What the Well-Architected Framework actually tells you about design decisions, which Azure costs arrive on schedule and which ambush you. Low-hanging fruit worth up to 40% of a cloud bill, taken from real projects.</span>
         <div style="display: flex; flex-wrap: wrap; gap: 8px; padding-top: 4px;"><span style="font-family: 'JetBrains Mono', monospace; font-size: 11px; color: #29B6F6; border: 1px solid #26304B; padding: 4px 9px;">Azure</span><span style="font-family: 'JetBrains Mono', monospace; font-size: 11px; color: #29B6F6; border: 1px solid #26304B; padding: 4px 9px;">WAF</span><span style="font-family: 'JetBrains Mono', monospace; font-size: 11px; color: #29B6F6; border: 1px solid #26304B; padding: 4px 9px;">FinOps</span></div>
       </div>
-      <div style="display: flex; flex-direction: column; gap: 8px; align-items: stretch; min-width: 180px;">
+      <div class="talk-actions" style="display: flex; flex-direction: column; gap: 8px; align-items: stretch; min-width: 180px;">
         <a href="https://sessionize.com/s/pawel-siwek/azure-well-architected-framework-cost-optimization/146096" style="font-family: 'Archivo Narrow', sans-serif; font-size: 13px; font-weight: 700; letter-spacing: 0.14em; text-transform: uppercase; color: #C5C6CB; border: 1px solid #26304B; padding: 11px 16px; text-align: center;" style-hover="border-color: #5BC9B0; color: #5BC9B0;">Abstract</a>
       </div>
     </div>
 
-    <div class="reveal" style="display: grid; grid-template-columns: minmax(0, 1fr) auto; gap: 20px; align-items: start; background: #121829; border: 1px solid #26304B; border-left: 3px solid #29B6F6; padding: 24px;" style-hover="border-color: #29B6F6;">
+    <div class="reveal talk-card" style="display: grid; grid-template-columns: minmax(0, 1fr) auto; gap: 20px; align-items: start; background: #121829; border: 1px solid #26304B; border-left: 3px solid #29B6F6; padding: 24px;" style-hover="border-color: #29B6F6;">
       <div style="display: flex; flex-direction: column; gap: 10px; min-width: 0;">
-        <div style="display: flex; flex-wrap: wrap; gap: 12px; align-items: baseline; font-family: 'Archivo Narrow', sans-serif; font-size: 12px; letter-spacing: 0.16em; color: #6C7285;">
+        <div class="talk-meta" style="display: flex; flex-wrap: wrap; gap: 12px; align-items: baseline; font-family: 'Archivo Narrow', sans-serif; font-size: 12px; letter-spacing: 0.16em; color: #6C7285;">
           <span style="color: #29B6F6;">EN</span><span>CONFERENCE TALK</span><span>45–60 MIN</span>
         </div>
-        <span style="font-family: Anton, sans-serif; font-size: 26px; line-height: 1.06; text-transform: uppercase;">Designing <span style="color: #29B6F6;">Mission-Critical Workloads</span></span>
+        <span class="talk-title" style="font-family: Anton, sans-serif; font-size: 26px; line-height: 1.06; text-transform: uppercase;">Designing <span style="color: #29B6F6;">Mission-Critical Workloads</span></span>
         <span style="font-size: 15px; line-height: 1.6; color: #C5C6CB;">Sustainable scale and performance without paying for infrastructure you do not need. Key architectural patterns for mission-critical workloads, paired with real architectures and the lessons that came out of them.</span>
         <div style="display: flex; flex-wrap: wrap; gap: 8px; padding-top: 4px;"><span style="font-family: 'JetBrains Mono', monospace; font-size: 11px; color: #29B6F6; border: 1px solid #26304B; padding: 4px 9px;">Azure</span><span style="font-family: 'JetBrains Mono', monospace; font-size: 11px; color: #29B6F6; border: 1px solid #26304B; padding: 4px 9px;">WAF</span><span style="font-family: 'JetBrains Mono', monospace; font-size: 11px; color: #29B6F6; border: 1px solid #26304B; padding: 4px 9px;">Reliability</span></div>
       </div>
-      <div style="display: flex; flex-direction: column; gap: 8px; align-items: stretch; min-width: 180px;">
+      <div class="talk-actions" style="display: flex; flex-direction: column; gap: 8px; align-items: stretch; min-width: 180px;">
         <a href="https://sessionize.com/s/pawel-siwek/azure-well-architected-framework-designing-mission/126048" style="font-family: 'Archivo Narrow', sans-serif; font-size: 13px; font-weight: 700; letter-spacing: 0.14em; text-transform: uppercase; color: #C5C6CB; border: 1px solid #26304B; padding: 11px 16px; text-align: center;" style-hover="border-color: #29B6F6; color: #29B6F6;">Abstract</a>
       </div>
     </div>
 
-    <div class="reveal" style="display: grid; grid-template-columns: minmax(0, 1fr) auto; gap: 20px; align-items: start; background: #121829; border: 1px solid #26304B; border-left: 3px solid #8E92E8; padding: 24px;" style-hover="border-color: #8E92E8;">
+    <div class="reveal talk-card" style="display: grid; grid-template-columns: minmax(0, 1fr) auto; gap: 20px; align-items: start; background: #121829; border: 1px solid #26304B; border-left: 3px solid #8E92E8; padding: 24px;" style-hover="border-color: #8E92E8;">
       <div style="display: flex; flex-direction: column; gap: 10px; min-width: 0;">
-        <div style="display: flex; flex-wrap: wrap; gap: 12px; align-items: baseline; font-family: 'Archivo Narrow', sans-serif; font-size: 12px; letter-spacing: 0.16em; color: #6C7285;">
+        <div class="talk-meta" style="display: flex; flex-wrap: wrap; gap: 12px; align-items: baseline; font-family: 'Archivo Narrow', sans-serif; font-size: 12px; letter-spacing: 0.16em; color: #6C7285;">
           <span style="color: #8E92E8;">PL</span><span>CONFERENCE TALK</span><span>45 MIN</span>
         </div>
-        <span style="font-family: Anton, sans-serif; font-size: 26px; line-height: 1.06; text-transform: uppercase;">Monitoring System <span style="color: #8E92E8;">— w praktyce</span></span>
+        <span class="talk-title" style="font-family: Anton, sans-serif; font-size: 26px; line-height: 1.06; text-transform: uppercase;">Monitoring System <span style="color: #8E92E8;">— w praktyce</span></span>
         <span style="font-size: 15px; line-height: 1.6; color: #C5C6CB;">Microsoft's reference architecture for cloud monitoring, plus the techniques that extend it so you can actually sleep. Delivered in Polish. What to watch for so the whole thing does not quietly stop working — or explode in cost.</span>
         <div style="display: flex; flex-wrap: wrap; gap: 8px; padding-top: 4px;"><span style="font-family: 'JetBrains Mono', monospace; font-size: 11px; color: #29B6F6; border: 1px solid #26304B; padding: 4px 9px;">Azure Monitor</span><span style="font-family: 'JetBrains Mono', monospace; font-size: 11px; color: #29B6F6; border: 1px solid #26304B; padding: 4px 9px;">Observability</span><span style="font-family: 'JetBrains Mono', monospace; font-size: 11px; color: #29B6F6; border: 1px solid #26304B; padding: 4px 9px;">DevOps</span></div>
       </div>
-      <div style="display: flex; flex-direction: column; gap: 8px; align-items: stretch; min-width: 180px;">
+      <div class="talk-actions" style="display: flex; flex-direction: column; gap: 8px; align-items: stretch; min-width: 180px;">
         <a href="https://sessionize.com/s/pawel-siwek/azure-well-architected-framework-monitoring-system/146095" style="font-family: 'Archivo Narrow', sans-serif; font-size: 13px; font-weight: 700; letter-spacing: 0.14em; text-transform: uppercase; color: #C5C6CB; border: 1px solid #26304B; padding: 11px 16px; text-align: center;" style-hover="border-color: #8E92E8; color: #8E92E8;">Abstract</a>
       </div>
     </div>
 
-    <!-- TODO(pawel): add exact date + link to https://aibaconference.com/agenda/ once 2025 edition is published -->
-    <div class="reveal" style="display: grid; grid-template-columns: minmax(0, 1fr) auto; gap: 20px; align-items: start; background: #121829; border: 1px solid #26304B; border-left: 3px solid #FFC000; padding: 24px;" style-hover="border-color: #FFC000;">
+    <!-- TODO(pawel): exact day + time once the session appears in the agenda (many slots are still TBA) -->
+    <div class="reveal talk-card" style="display: grid; grid-template-columns: minmax(0, 1fr) auto; gap: 20px; align-items: start; background: #121829; border: 1px solid #26304B; border-left: 3px solid #FFC000; padding: 24px;" style-hover="border-color: #FFC000;">
       <div style="display: flex; flex-direction: column; gap: 10px; min-width: 0;">
-        <div style="display: flex; flex-wrap: wrap; gap: 12px; align-items: baseline; font-family: 'Archivo Narrow', sans-serif; font-size: 12px; letter-spacing: 0.16em; color: #6C7285;">
-          <span style="color: #FFC000;">EN</span><span>CONFERENCE TALK</span><span>25 MIN</span><span>AI&lt;&gt;BA · KATOWICE</span><span style="color: #FFC000; border: 1px solid #FFC000; padding: 2px 6px;">UPCOMING</span>
+        <div class="talk-meta" style="display: flex; flex-wrap: wrap; gap: 12px; align-items: baseline; font-family: 'Archivo Narrow', sans-serif; font-size: 12px; letter-spacing: 0.16em; color: #6C7285;">
+          <span style="color: #FFC000;">EN</span><span>CONFERENCE TALK</span><span>25 MIN</span><span style="color: #FFC000; border: 1px solid #FFC000; padding: 2px 6px;">UPCOMING</span>
         </div>
-        <span style="font-family: Anton, sans-serif; font-size: 26px; line-height: 1.06; text-transform: uppercase;">Azure WAF: <span style="color: #FFC000;">Designing AI Workloads in Practice</span></span>
+        <span class="talk-title" style="font-family: Anton, sans-serif; font-size: 26px; line-height: 1.06; text-transform: uppercase;">Azure WAF: <span style="color: #FFC000;">Designing AI Workloads in Practice</span></span>
+        <span style="font-family: 'JetBrains Mono', monospace; font-size: 13px; line-height: 1.5; color: #C5C6CB;"><a href="https://aibaconference.com/agenda/" style="color: #FFC000;">AI&lt;&gt;BA Conference</a> · Katowice · <span style="white-space: nowrap;">Oct 21–23, 2026</span> <span style="color: #6C7285;">(Silesian Museum + online)</span></span>
         <span style="font-size: 15px; line-height: 1.6; color: #C5C6CB;">I plugged an LLM into my house — 325 devices in Home Assistant — then applied the Azure Well-Architected Framework to it, step by step. Meet HAI.</span>
         <span style="font-size: 15px; line-height: 1.6; color: #C5C6CB;">Here's what broke along the way: a model that didn't exist in my region, a $61,777 bill from one forgotten deployment, and 37% of my evals failing while every health check stayed green.</span>
         <span style="font-size: 15px; line-height: 1.6; color: #C5C6CB;">You'll leave with concrete patterns for security, cost control, resiliency and AI observability — on an architecture small enough to see all at once.</span>
         <div style="display: flex; flex-wrap: wrap; gap: 8px; padding-top: 4px;"><span style="font-family: 'JetBrains Mono', monospace; font-size: 11px; color: #29B6F6; border: 1px solid #26304B; padding: 4px 9px;">Azure</span><span style="font-family: 'JetBrains Mono', monospace; font-size: 11px; color: #29B6F6; border: 1px solid #26304B; padding: 4px 9px;">WAF</span><span style="font-family: 'JetBrains Mono', monospace; font-size: 11px; color: #29B6F6; border: 1px solid #26304B; padding: 4px 9px;">AI</span><span style="font-family: 'JetBrains Mono', monospace; font-size: 11px; color: #29B6F6; border: 1px solid #26304B; padding: 4px 9px;">Home Assistant</span></div>
       </div>
-      <div style="display: flex; flex-direction: column; gap: 8px; align-items: stretch; min-width: 180px;">
-        <!-- TODO(pawel): replace with link to https://aibaconference.com/agenda/ once date is confirmed -->
-        <a href="https://aibaconference.com" style="font-family: 'Archivo Narrow', sans-serif; font-size: 13px; font-weight: 700; letter-spacing: 0.14em; text-transform: uppercase; color: #FFC000; border: 1px solid #FFC000; padding: 11px 16px; text-align: center;" style-hover="background: rgba(255,192,0,0.08);">AI&lt;&gt;BA · TBD</a>
+      <div class="talk-actions" style="display: flex; flex-direction: column; gap: 8px; align-items: stretch; min-width: 180px;">
+        <a href="https://aibaconference.com/agenda/" style="font-family: 'Archivo Narrow', sans-serif; font-size: 13px; font-weight: 700; letter-spacing: 0.14em; text-transform: uppercase; color: #FFC000; border: 1px solid #FFC000; padding: 11px 16px; text-align: center;" style-hover="background: rgba(255,192,0,0.08);">AI&lt;&gt;BA agenda</a>
       </div>
     </div>
 

@@ -51,6 +51,22 @@
   @keyframes pulse { 0%, 100% { opacity: 0.55; } 50% { opacity: 1; } }
   @keyframes flicker { 0%, 96%, 100% { opacity: 1; } 97% { opacity: 0.72; } 98.5% { opacity: 0.9; } }
   @keyframes rise { from { opacity: 0; transform: translateY(14px); } to { opacity: 1; transform: translateY(0); } }
+  /* Board: canvas and overlay share one grid cell, so the board grows to fit the overlay
+     instead of the overlay spilling over the HUD above and the legend below. */
+  .board { display: grid; grid-template-columns: minmax(0, 1fr); }
+  .board-canvas { grid-area: 1 / 1; align-self: start; }
+  .board-overlay { grid-area: 1 / 1; }
+  /* Context-aware control hints */
+  @media (pointer: coarse) { .controls-keyboard { display: none !important; } }
+  @media (pointer: fine)   { .controls-touch    { display: none !important; } }
+  /* HUD below desktop width: give LEVEL room for the longest level name; LAST DEPLOYED wraps to its own row */
+  @media (max-width: 1099.98px) { .hud-level { min-width: 170px !important; } }
+  /* RWD: narrow screens only — nothing below changes layout at >= 768px */
+  @media (max-width: 767.98px) {
+    .site-header { flex-wrap: wrap !important; justify-content: flex-start !important; gap: 14px 24px; }
+    .site-nav { flex-wrap: wrap !important; gap: 10px 18px !important; }
+    .board-overlay { background: rgba(8,11,20,0.94) !important; -webkit-backdrop-filter: blur(4px); backdrop-filter: blur(4px); padding: 20px !important; }
+  }
 </style>
 </helmet>
 
@@ -61,7 +77,7 @@
   <div style="position: fixed; left: 0; right: 0; height: 140px; pointer-events: none; z-index: 3; background: linear-gradient(180deg, rgba(91,201,176,0) 0%, rgba(91,201,176,0.05) 50%, rgba(91,201,176,0) 100%); animation: scan 7s linear infinite;"></div>
   <div style="position: absolute; top: -220px; left: 50%; width: 1100px; height: 620px; transform: translateX(-50%); pointer-events: none; background: radial-gradient(50% 50% at 50% 50%, rgba(91,201,176,0.14) 0%, rgba(11,14,24,0) 70%);"></div>
 
-  <header style="width: 100%; max-width: 1120px; display: flex; justify-content: space-between; align-items: center; padding: 26px 0; position: relative; z-index: 2;">
+  <header class="site-header" style="width: 100%; max-width: 1120px; display: flex; justify-content: space-between; align-items: center; padding: 26px 0; position: relative; z-index: 2;">
     <div style="display: flex; align-items: center; gap: 14px;">
       <img src="/logo/siwek-cloud-mark.svg" alt="siwek.cloud" style="width: 40px; height: 40px; image-rendering: pixelated;">
       <div style="display: flex; flex-direction: column; gap: 2px;">
@@ -69,7 +85,7 @@
         <span style="font-family: 'Archivo Narrow', sans-serif; font-size: 10px; letter-spacing: 0.2em; color: #6C7285;">PRINCIPAL PRODUCT ARCHITECT · DYNATRACE · AZURE MVP</span>
       </div>
     </div>
-    <nav style="display: flex; gap: 22px; align-items: center; font-family: 'Archivo Narrow', sans-serif; font-size: 13px; letter-spacing: 0.14em; text-transform: uppercase;">
+    <nav class="site-nav" style="display: flex; gap: 22px; align-items: center; font-family: 'Archivo Narrow', sans-serif; font-size: 13px; letter-spacing: 0.14em; text-transform: uppercase;">
       <a href="/waf/" style="color: #C5C6CB;">Talks &amp; open source</a>
       <a href="https://github.com/pawelsiwek" style="color: #C5C6CB;">GitHub</a>
       <a href="https://sessionize.com/pawel-siwek/" style="color: #C5C6CB;">Sessionize</a>
@@ -85,24 +101,24 @@
 
   <section style="width: 100%; max-width: 1120px; position: relative; z-index: 2; display: flex; flex-direction: column; gap: 12px;">
     <div style="display: flex; flex-wrap: wrap; gap: 10px; align-items: stretch; font-family: 'JetBrains Mono', monospace; font-size: 12px;">
-      <div style="flex: 1; min-width: 130px; background: #121829; border: 1px solid #26304B; padding: 10px 14px; display: flex; flex-direction: column; gap: 4px;"><span style="font-family: 'Archivo Narrow', sans-serif; font-size: 10px; letter-spacing: 0.16em; color: #6C7285;">LEVEL</span><span style="font-size: 18px; font-weight: 700; color: #FFFFFF;">{{ levelName }}</span></div>
+      <div class="hud-level" style="flex: 1; min-width: 130px; background: #121829; border: 1px solid #26304B; padding: 10px 14px; display: flex; flex-direction: column; gap: 4px;"><span style="font-family: 'Archivo Narrow', sans-serif; font-size: 10px; letter-spacing: 0.16em; color: #6C7285;">LEVEL</span><span style="font-size: 18px; font-weight: 700; color: #FFFFFF;">{{ levelName }}</span></div>
       <div style="flex: 1; min-width: 130px; background: #121829; border: 1px solid #26304B; padding: 10px 14px; display: flex; flex-direction: column; gap: 6px;"><span style="font-family: 'Archivo Narrow', sans-serif; font-size: 10px; letter-spacing: 0.16em; color: #6C7285;">SERVICES</span><canvas ref="{{ glyphStripRef }}" style="display:block;image-rendering:pixelated;" title="{{ gemLabel }}"></canvas></div>
       <div style="flex: 1; min-width: 110px; background: #121829; border: 1px solid #26304B; padding: 10px 14px; display: flex; flex-direction: column; gap: 4px;"><span style="font-family: 'Archivo Narrow', sans-serif; font-size: 10px; letter-spacing: 0.16em; color: #6C7285;">SLO BUDGET</span><span style="font-size: 18px; font-weight: 700; color: {{ timeColor }};">{{ timeLabel }}</span></div>
       <div style="flex: 1; min-width: 110px; background: #121829; border: 1px solid #26304B; padding: 10px 14px; display: flex; flex-direction: column; gap: 4px;"><span style="font-family: 'Archivo Narrow', sans-serif; font-size: 10px; letter-spacing: 0.16em; color: #6C7285;">RETRIES</span><span style="font-size: 18px; font-weight: 700; color: #FFC000;">{{ livesLabel }}</span></div>
       <div style="flex: 2; min-width: 190px; background: #121829; border: 1px solid #26304B; padding: 10px 14px; display: flex; flex-direction: column; gap: 6px;"><span style="font-family: 'Archivo Narrow', sans-serif; font-size: 10px; letter-spacing: 0.16em; color: #6C7285;">LAST DEPLOYED</span><span style="font-size: 16px; font-weight: 700; color: #29B6F6; display:flex; align-items:center; gap:7px;"><canvas ref="{{ lastGlyphRef }}" style="display:inline-block;image-rendering:pixelated;flex:none;"></canvas>{{ lastPicked }}</span></div>
     </div>
 
-    <div style="position: relative; background: #080B14; border: 1px solid #26304B; box-shadow: 0 0 0 1px rgba(91,201,176,0.08), 0 30px 80px rgba(0,0,0,0.6);">
-      <canvas ref="{{ canvasRef }}" style="display: block; width: 100%; height: auto; image-rendering: pixelated;"></canvas>
+    <div class="board" style="position: relative; background: #080B14; border: 1px solid #26304B; box-shadow: 0 0 0 1px rgba(91,201,176,0.08), 0 30px 80px rgba(0,0,0,0.6);">
+      <canvas ref="{{ canvasRef }}" class="board-canvas" style="display: block; width: 100%; height: auto; image-rendering: pixelated;"></canvas>
       <div style="position: absolute; inset: 0; pointer-events: none; background: repeating-linear-gradient(180deg, rgba(0,0,0,0) 0px, rgba(0,0,0,0) 2px, rgba(0,0,0,0.22) 3px, rgba(0,0,0,0) 4px);"></div>
 
-      <div style="position: absolute; inset: 0; display: {{ overlayDisplay }}; align-items: center; justify-content: center; background: rgba(8,11,20,0.9); padding: 24px;">
+      <div class="board-overlay" style="position: relative; display: {{ overlayDisplay }}; align-items: center; justify-content: center; background: rgba(8,11,20,0.9); padding: 24px;">
         <div style="max-width: 520px; display: flex; flex-direction: column; gap: 16px; align-items: flex-start;">
           <span style="font-family: 'Archivo Narrow', sans-serif; font-size: 12px; letter-spacing: 0.2em; color: #5BC9B0;">{{ overlayKicker }}</span>
           <span style="font-family: Anton, sans-serif; font-size: clamp(30px, 5vw, 54px); line-height: 0.94; text-transform: uppercase;">{{ overlayTitle }}</span>
           <span style="font-size: 15px; line-height: 1.6; color: #C5C6CB;">{{ overlayBody }}</span>
           <button onClick="{{ onStart }}" style="font-family: 'Archivo Narrow', sans-serif; font-size: 15px; font-weight: 700; letter-spacing: 0.16em; text-transform: uppercase; color: #0B0E18; background: #5BC9B0; border: 0; padding: 14px 28px; cursor: pointer;" style-hover="background: #88CAB6;">{{ overlayButton }}</button>
-          <span style="font-family: 'JetBrains Mono', monospace; font-size: 12px; color: #6C7285; line-height: 1.7;">↑ ↓ ← → or WASD — move and dig<br>R — restart level · P — pause</span>
+          <span class="controls-keyboard" style="font-family: 'JetBrains Mono', monospace; font-size: 12px; color: #6C7285; line-height: 1.7;">↑ ↓ ← → or WASD — move and dig<br>R — restart level · P — pause</span>
         </div>
       </div>
     </div>
@@ -117,6 +133,7 @@
       <span>{{ hintLine }}</span>
     </div>
 
+    <span class="controls-touch" style="font-family: 'JetBrains Mono', monospace; font-size: 12px; color: #6C7285; text-align: center;">tap the D-pad to move and dig</span>
     <div style="display: grid; grid-template-columns: repeat(3, 64px); gap: 8px; justify-content: center; padding-top: 6px;">
       <span></span>
       <button onClick="{{ onUp }}" style="font-family: 'JetBrains Mono', monospace; font-size: 18px; color: #C5C6CB; background: #121829; border: 1px solid #26304B; padding: 14px 0; cursor: pointer;" style-hover="border-color: #5BC9B0;">↑</button>
@@ -140,7 +157,7 @@
         <!-- NOW_ITEMS: update when shipping something new -->
         <span style="font-size: 14px; line-height: 1.5; color: #C5C6CB;">HAI — demo app for <em>Azure WAF: Designing AI Workloads in Practice</em> (AI&lt;&gt;BA, Katowice)</span>
         <!-- time-boxed: remove after 2026-10-28 -->
-        <span style="font-size: 14px; line-height: 1.5; color: #C5C6CB;">Dev Days Gdańsk — hands-on GitHub Copilot workshop · Oct 28, 6–9 PM, Olivia Six (<a href="https://lu.ma/tjq6i6s5" style="color: #5BC9B0;">register</a>)</span>
+        <span style="font-size: 14px; line-height: 1.5; color: #C5C6CB;">Dev Days Gdańsk — hands-on GitHub Copilot workshop · Oct 28, 6–9 PM, Olivia Six (<a href="https://luma.com/tjq6i6s5" style="color: #5BC9B0;">register</a>)</span>
       </div>
     </div>
   </section>
@@ -769,7 +786,7 @@ class Component extends DCLogic {
     const mm = String(Math.floor(s.time/60)).padStart(1,'0');
     const ss = String(s.time%60).padStart(2,'0');
     const over = {
-      intro:  { k:'BOULDER DASH · AZURE EDITION', t:'LEGACY DASH', b:'Dig through the tech debt, collect the Azure services, reach the portal. Monoliths fall the moment you dig out the ground beneath them, and they do not forgive. Three levels: sandbox, staging, production.', btn:'Start' },
+      intro:  { k:'A BOULDER DASH TRIBUTE', t:'LEGACY DASH', b:'Dig through the tech debt, collect the Azure services, reach the portal. Monoliths fall the moment you dig out the ground beneath them, and they do not forgive. Three levels: sandbox, staging, production.', btn:'Start' },
       paused: { k:'PAUSED', t:'HOLD', b:'Paused. Hit P or the button to resume.', btn:'Resume' },
       over:   { k: s.deathReason || 'INCIDENT', t:'POST-MORTEM', b:'Out of retries. Score: ' + s.score + ' pts. Yes, this is a metaphor.', btn:'Start over' },
       won:    { k:'ALL ENVIRONMENTS GREEN', t:'SHIPPED', b:'Production is up, services collected, budget delivered. Score: ' + s.score + ' pts.', btn:'Play again' }
