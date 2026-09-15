@@ -1,0 +1,294 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Talks &amp; Open Source — Paweł Siwek · Principal Product Architect at Dynatrace · Azure MVP</title>
+<meta name="description" content="Conference talks on Azure Well-Architected Framework, cost optimization, mission-critical workloads, and AI observability. Open source tools for Azure and Dynatrace.">
+<meta property="og:title" content="Talks &amp; Open Source — Paweł Siwek · Azure MVP">
+<meta property="og:description" content="Conference talks on Azure Well-Architected, cost optimization, and AI observability. Open source tools for Azure and Dynatrace.">
+<meta property="og:type" content="website">
+<meta property="og:url" content="https://siwek.cloud/waf/">
+<meta property="og:image" content="https://siwek.cloud/logo/favicon-512.png">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Talks &amp; Open Source — Paweł Siwek · Azure MVP">
+<meta name="twitter:description" content="Conference talks on Azure Well-Architected, cost optimization, and AI observability.">
+<meta name="twitter:image" content="https://siwek.cloud/logo/favicon-512.png">
+<link rel="icon" type="image/png" sizes="32x32" href="/logo/favicon-32.png">
+<link rel="icon" type="image/png" sizes="16x16" href="/logo/favicon-16.png">
+<link rel="apple-touch-icon" href="/logo/apple-touch-icon.png">
+<script src="/support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Anton&family=Archivo:wght@400;600;700&family=Archivo+Narrow:wght@700&family=JetBrains+Mono:wght@400;700&display=swap" rel="stylesheet">
+<style>
+  * { box-sizing: border-box; }
+  html, body { margin: 0; background: #0B0E18; }
+  a { color: #5BC9B0; text-decoration: none; }
+  a:hover { color: #88CAB6; }
+  @keyframes scan { 0% { transform: translateY(-100%); } 100% { transform: translateY(100%); } }
+  @keyframes caret { 0%, 49% { opacity: 1; } 50%, 100% { opacity: 0; } }
+  @keyframes trace { from { transform: scaleX(0); } to { transform: scaleX(1); } }
+  @keyframes rise { from { opacity: 0; transform: translateY(16px); } to { opacity: 1; transform: translateY(0); } }
+  .reveal { opacity: 0; transform: translateY(16px); transition: opacity .55s ease, transform .55s ease; }
+  .reveal.on { opacity: 1; transform: translateY(0); }
+  .bar { transform-origin: left; animation: trace .8s cubic-bezier(.2,.8,.2,1) both; }
+</style>
+</helmet>
+
+<div style="font-family: Archivo, sans-serif; background: #0B0E18; color: #FFFFFF; min-height: 100vh; display: flex; flex-direction: column; align-items: center; padding: 0 20px 90px; position: relative; overflow: hidden;">
+
+  <div style="position: fixed; inset: 0; pointer-events: none; z-index: 3; background: repeating-linear-gradient(180deg, rgba(0,0,0,0) 0px, rgba(0,0,0,0) 2px, rgba(0,0,0,0.14) 3px, rgba(0,0,0,0) 4px);"></div>
+  <div style="position: fixed; left: 0; right: 0; height: 160px; pointer-events: none; z-index: 3; background: linear-gradient(180deg, rgba(91,201,176,0) 0%, rgba(91,201,176,0.045) 50%, rgba(91,201,176,0) 100%); animation: scan 8s linear infinite;"></div>
+  <div style="position: absolute; top: -260px; left: 50%; width: 1200px; height: 680px; transform: translateX(-50%); pointer-events: none; background: radial-gradient(50% 50% at 50% 50%, rgba(41,182,246,0.12) 0%, rgba(11,14,24,0) 70%);"></div>
+
+  <header style="width: 100%; max-width: 1120px; display: flex; justify-content: space-between; align-items: center; padding: 26px 0; position: relative; z-index: 2;">
+    <a href="/" style="display: flex; align-items: center; gap: 14px;">
+      <img src="/logo/siwek-cloud-mark.svg" alt="siwek.cloud" style="width: 40px; height: 40px; image-rendering: pixelated;">
+      <div style="display: flex; flex-direction: column; gap: 2px;">
+        <span style="font-family: Anton, sans-serif; font-size: 22px; line-height: 1; text-transform: uppercase; color: #FFFFFF;">SIWEK<span style="color: #5BC9B0;">.CLOUD</span></span>
+        <span style="font-family: 'Archivo Narrow', sans-serif; font-size: 10px; letter-spacing: 0.2em; color: #6C7285;">PRINCIPAL PRODUCT ARCHITECT · DYNATRACE · AZURE MVP</span>
+      </div>
+    </a>
+    <nav style="display: flex; gap: 22px; align-items: center; font-family: 'Archivo Narrow', sans-serif; font-size: 13px; letter-spacing: 0.14em; text-transform: uppercase;">
+      <a href="/" style="color: #C5C6CB;">Play</a>
+      <a href="#talks" style="color: #C5C6CB;">Talks</a>
+      <a href="#code" style="color: #C5C6CB;">Open source</a>
+    </nav>
+  </header>
+
+  <section style="width: 100%; max-width: 1120px; position: relative; z-index: 2; padding: 30px 0 56px; display: flex; flex-direction: column; gap: 16px; animation: rise .6s ease both;">
+    <div style="display: flex; align-items: center; gap: 12px; font-family: 'JetBrains Mono', monospace; font-size: 14px; color: #5BC9B0;">
+      <span style="color: #6C7285;">~</span><span>{{ typed }}</span><span style="width: 9px; height: 17px; background: #5BC9B0; display: inline-block; animation: caret 1s step-end infinite;"></span>
+    </div>
+    <h1 style="margin: 0; font-family: Anton, sans-serif; font-size: clamp(40px, 7.4vw, 92px); line-height: 0.92; text-transform: uppercase;">TALKS <span style="color: #6C7285;">&amp;</span> <span style="color: #5BC9B0;">OPEN SOURCE</span></h1>
+    <div style="height: 4px; width: 180px; background: linear-gradient(90deg, #5BC9B0, #6C7BE8 55%, #E84C4C);" class="bar"></div>
+    <!-- TODO(pawel): replace Credly href with exact mvp.microsoft.com profile URL once known -->
+    <p style="margin: 0; font-size: 17px; line-height: 1.6; color: #C5C6CB; text-wrap: pretty;"><a href="https://www.credly.com/badges/79d11b19-ae03-47d4-b3da-6adfbe7925df" style="color: #C5C6CB;">Microsoft MVP in Azure Well-Architected &amp; Resiliency</a> · <a href="https://learn.microsoft.com/api/credentials/share/en-us/SiwekPawel-7295/24C9EAB0B8CA2CFA?sharingId=MVP_508199" style="color: #C5C6CB;">Microsoft Certified: Azure Solutions Architect Expert</a></p>
+    <p style="margin: 8px 0 0; font-size: 17px; line-height: 1.6; color: #C5C6CB; text-wrap: pretty;">Everything below is built on real failures: my own and the ones I got called in to fix.</p>
+  </section>
+
+  <section id="talks" style="width: 100%; max-width: 1120px; position: relative; z-index: 2; display: flex; flex-direction: column; gap: 22px;">
+    <div style="display: flex; align-items: baseline; gap: 16px; border-bottom: 1px solid #26304B; padding-bottom: 12px;">
+      <span style="font-family: 'Archivo Narrow', sans-serif; font-size: 13px; letter-spacing: 0.2em; color: #5BC9B0;">01</span>
+      <h2 style="margin: 0; font-family: Anton, sans-serif; font-size: 30px; text-transform: uppercase;">Talks I give</h2>
+    </div>
+
+    <div class="reveal" style="display: grid; grid-template-columns: minmax(0, 1fr) auto; gap: 20px; align-items: start; background: #121829; border: 1px solid #26304B; border-left: 3px solid #5BC9B0; padding: 24px;" style-hover="border-color: #5BC9B0;">
+      <div style="display: flex; flex-direction: column; gap: 10px; min-width: 0;">
+        <div style="display: flex; flex-wrap: wrap; gap: 12px; align-items: baseline; font-family: 'Archivo Narrow', sans-serif; font-size: 12px; letter-spacing: 0.16em; color: #6C7285;">
+          <span style="color: #5BC9B0;">EN</span><span>CONFERENCE TALK</span><span>45–60 MIN</span>
+        </div>
+        <span style="font-family: Anton, sans-serif; font-size: 26px; line-height: 1.06; text-transform: uppercase;">Well-Architected — <span style="color: #5BC9B0;">Cost Optimization in practice</span></span>
+        <span style="font-size: 15px; line-height: 1.6; color: #C5C6CB;">What the Well-Architected Framework actually tells you about design decisions, which Azure costs arrive on schedule and which ambush you. Low-hanging fruit worth up to 40% of a cloud bill, taken from real projects.</span>
+        <div style="display: flex; flex-wrap: wrap; gap: 8px; padding-top: 4px;"><span style="font-family: 'JetBrains Mono', monospace; font-size: 11px; color: #29B6F6; border: 1px solid #26304B; padding: 4px 9px;">Azure</span><span style="font-family: 'JetBrains Mono', monospace; font-size: 11px; color: #29B6F6; border: 1px solid #26304B; padding: 4px 9px;">WAF</span><span style="font-family: 'JetBrains Mono', monospace; font-size: 11px; color: #29B6F6; border: 1px solid #26304B; padding: 4px 9px;">FinOps</span></div>
+      </div>
+      <div style="display: flex; flex-direction: column; gap: 8px; align-items: stretch; min-width: 180px;">
+        <a href="https://sessionize.com/s/pawel-siwek/azure-well-architected-framework-cost-optimization/146096" style="font-family: 'Archivo Narrow', sans-serif; font-size: 13px; font-weight: 700; letter-spacing: 0.14em; text-transform: uppercase; color: #C5C6CB; border: 1px solid #26304B; padding: 11px 16px; text-align: center;" style-hover="border-color: #5BC9B0; color: #5BC9B0;">Abstract</a>
+      </div>
+    </div>
+
+    <div class="reveal" style="display: grid; grid-template-columns: minmax(0, 1fr) auto; gap: 20px; align-items: start; background: #121829; border: 1px solid #26304B; border-left: 3px solid #29B6F6; padding: 24px;" style-hover="border-color: #29B6F6;">
+      <div style="display: flex; flex-direction: column; gap: 10px; min-width: 0;">
+        <div style="display: flex; flex-wrap: wrap; gap: 12px; align-items: baseline; font-family: 'Archivo Narrow', sans-serif; font-size: 12px; letter-spacing: 0.16em; color: #6C7285;">
+          <span style="color: #29B6F6;">EN</span><span>CONFERENCE TALK</span><span>45–60 MIN</span>
+        </div>
+        <span style="font-family: Anton, sans-serif; font-size: 26px; line-height: 1.06; text-transform: uppercase;">Designing <span style="color: #29B6F6;">Mission-Critical Workloads</span></span>
+        <span style="font-size: 15px; line-height: 1.6; color: #C5C6CB;">Sustainable scale and performance without paying for infrastructure you do not need. Key architectural patterns for mission-critical workloads, paired with real architectures and the lessons that came out of them.</span>
+        <div style="display: flex; flex-wrap: wrap; gap: 8px; padding-top: 4px;"><span style="font-family: 'JetBrains Mono', monospace; font-size: 11px; color: #29B6F6; border: 1px solid #26304B; padding: 4px 9px;">Azure</span><span style="font-family: 'JetBrains Mono', monospace; font-size: 11px; color: #29B6F6; border: 1px solid #26304B; padding: 4px 9px;">WAF</span><span style="font-family: 'JetBrains Mono', monospace; font-size: 11px; color: #29B6F6; border: 1px solid #26304B; padding: 4px 9px;">Reliability</span></div>
+      </div>
+      <div style="display: flex; flex-direction: column; gap: 8px; align-items: stretch; min-width: 180px;">
+        <a href="https://sessionize.com/s/pawel-siwek/azure-well-architected-framework-designing-mission/126048" style="font-family: 'Archivo Narrow', sans-serif; font-size: 13px; font-weight: 700; letter-spacing: 0.14em; text-transform: uppercase; color: #C5C6CB; border: 1px solid #26304B; padding: 11px 16px; text-align: center;" style-hover="border-color: #29B6F6; color: #29B6F6;">Abstract</a>
+      </div>
+    </div>
+
+    <div class="reveal" style="display: grid; grid-template-columns: minmax(0, 1fr) auto; gap: 20px; align-items: start; background: #121829; border: 1px solid #26304B; border-left: 3px solid #8E92E8; padding: 24px;" style-hover="border-color: #8E92E8;">
+      <div style="display: flex; flex-direction: column; gap: 10px; min-width: 0;">
+        <div style="display: flex; flex-wrap: wrap; gap: 12px; align-items: baseline; font-family: 'Archivo Narrow', sans-serif; font-size: 12px; letter-spacing: 0.16em; color: #6C7285;">
+          <span style="color: #8E92E8;">PL</span><span>CONFERENCE TALK</span><span>45 MIN</span>
+        </div>
+        <span style="font-family: Anton, sans-serif; font-size: 26px; line-height: 1.06; text-transform: uppercase;">Monitoring System <span style="color: #8E92E8;">— w praktyce</span></span>
+        <span style="font-size: 15px; line-height: 1.6; color: #C5C6CB;">Microsoft's reference architecture for cloud monitoring, plus the techniques that extend it so you can actually sleep. Delivered in Polish. What to watch for so the whole thing does not quietly stop working — or explode in cost.</span>
+        <div style="display: flex; flex-wrap: wrap; gap: 8px; padding-top: 4px;"><span style="font-family: 'JetBrains Mono', monospace; font-size: 11px; color: #29B6F6; border: 1px solid #26304B; padding: 4px 9px;">Azure Monitor</span><span style="font-family: 'JetBrains Mono', monospace; font-size: 11px; color: #29B6F6; border: 1px solid #26304B; padding: 4px 9px;">Observability</span><span style="font-family: 'JetBrains Mono', monospace; font-size: 11px; color: #29B6F6; border: 1px solid #26304B; padding: 4px 9px;">DevOps</span></div>
+      </div>
+      <div style="display: flex; flex-direction: column; gap: 8px; align-items: stretch; min-width: 180px;">
+        <a href="https://sessionize.com/s/pawel-siwek/azure-well-architected-framework-monitoring-system/146095" style="font-family: 'Archivo Narrow', sans-serif; font-size: 13px; font-weight: 700; letter-spacing: 0.14em; text-transform: uppercase; color: #C5C6CB; border: 1px solid #26304B; padding: 11px 16px; text-align: center;" style-hover="border-color: #8E92E8; color: #8E92E8;">Abstract</a>
+      </div>
+    </div>
+
+    <!-- TODO(pawel): add exact date + link to https://aibaconference.com/agenda/ once 2025 edition is published -->
+    <div class="reveal" style="display: grid; grid-template-columns: minmax(0, 1fr) auto; gap: 20px; align-items: start; background: #121829; border: 1px solid #26304B; border-left: 3px solid #FFC000; padding: 24px;" style-hover="border-color: #FFC000;">
+      <div style="display: flex; flex-direction: column; gap: 10px; min-width: 0;">
+        <div style="display: flex; flex-wrap: wrap; gap: 12px; align-items: baseline; font-family: 'Archivo Narrow', sans-serif; font-size: 12px; letter-spacing: 0.16em; color: #6C7285;">
+          <span style="color: #FFC000;">EN</span><span>CONFERENCE TALK</span><span>25 MIN</span><span>AI&lt;&gt;BA · KATOWICE</span><span style="color: #FFC000; border: 1px solid #FFC000; padding: 2px 6px;">UPCOMING</span>
+        </div>
+        <span style="font-family: Anton, sans-serif; font-size: 26px; line-height: 1.06; text-transform: uppercase;">Azure WAF: <span style="color: #FFC000;">Designing AI Workloads in Practice</span></span>
+        <span style="font-size: 15px; line-height: 1.6; color: #C5C6CB;">I plugged an LLM into my house — 325 devices in Home Assistant — then applied the Azure Well-Architected Framework to it, step by step. Meet HAI.</span>
+        <span style="font-size: 15px; line-height: 1.6; color: #C5C6CB;">Here's what broke along the way: a model that didn't exist in my region, a $61,777 bill from one forgotten deployment, and 37% of my evals failing while every health check stayed green.</span>
+        <span style="font-size: 15px; line-height: 1.6; color: #C5C6CB;">You'll leave with concrete patterns for security, cost control, resiliency and AI observability — on an architecture small enough to see all at once.</span>
+        <div style="display: flex; flex-wrap: wrap; gap: 8px; padding-top: 4px;"><span style="font-family: 'JetBrains Mono', monospace; font-size: 11px; color: #29B6F6; border: 1px solid #26304B; padding: 4px 9px;">Azure</span><span style="font-family: 'JetBrains Mono', monospace; font-size: 11px; color: #29B6F6; border: 1px solid #26304B; padding: 4px 9px;">WAF</span><span style="font-family: 'JetBrains Mono', monospace; font-size: 11px; color: #29B6F6; border: 1px solid #26304B; padding: 4px 9px;">AI</span><span style="font-family: 'JetBrains Mono', monospace; font-size: 11px; color: #29B6F6; border: 1px solid #26304B; padding: 4px 9px;">Home Assistant</span></div>
+      </div>
+      <div style="display: flex; flex-direction: column; gap: 8px; align-items: stretch; min-width: 180px;">
+        <!-- TODO(pawel): replace with link to https://aibaconference.com/agenda/ once date is confirmed -->
+        <a href="https://aibaconference.com" style="font-family: 'Archivo Narrow', sans-serif; font-size: 13px; font-weight: 700; letter-spacing: 0.14em; text-transform: uppercase; color: #FFC000; border: 1px solid #FFC000; padding: 11px 16px; text-align: center;" style-hover="background: rgba(255,192,0,0.08);">AI&lt;&gt;BA · TBD</a>
+      </div>
+    </div>
+
+    <div class="reveal" style="display: flex; flex-direction: column; gap: 14px; padding-top: 14px;">
+      <span style="font-family: 'Archivo Narrow', sans-serif; font-size: 12px; letter-spacing: 0.2em; color: #6C7285;">WHERE I HAVE SPOKEN</span>
+      <div style="display: flex; flex-wrap: wrap; gap: 10px;">
+        <span style="font-family: 'JetBrains Mono', monospace; font-size: 12px; color: #C5C6CB; border: 1px solid #26304B; padding: 8px 12px;">WeAreDevelopers World Congress, Berlin / VoD <span style="color: #6C7285;">· Jul 2026</span></span>
+        <span style="font-family: 'JetBrains Mono', monospace; font-size: 12px; color: #C5C6CB; border: 1px solid #26304B; padding: 8px 12px;">Update Conference Kraków <span style="color: #6C7285;">· May 2026</span></span>
+        <span style="font-family: 'JetBrains Mono', monospace; font-size: 12px; color: #C5C6CB; border: 1px solid #26304B; padding: 8px 12px;">AzureDay Poland, Warsaw <span style="color: #6C7285;">· Mar 2026</span></span>
+        <span style="font-family: 'JetBrains Mono', monospace; font-size: 12px; color: #C5C6CB; border: 1px solid #26304B; padding: 8px 12px;">WeAreDevelopers World Congress, Berlin <span style="color: #6C7285;">· Jul 2025</span></span>
+        <span style="font-family: 'JetBrains Mono', monospace; font-size: 12px; color: #C5C6CB; border: 1px solid #26304B; padding: 8px 12px;">AzureDay Poland, Warsaw <span style="color: #6C7285;">· Mar 2025</span></span>
+        <span style="font-family: 'JetBrains Mono', monospace; font-size: 12px; color: #C5C6CB; border: 1px solid #26304B; padding: 8px 12px;">SysOps / DevOps Meetup, Warsaw <span style="color: #6C7285;">· Mar 2023</span></span>
+      </div>
+    </div>
+  </section>
+
+  <section id="code" style="width: 100%; max-width: 1120px; position: relative; z-index: 2; padding-top: 72px; display: flex; flex-direction: column; gap: 22px;">
+    <div style="display: flex; align-items: baseline; gap: 16px; border-bottom: 1px solid #26304B; padding-bottom: 12px;">
+      <span style="font-family: 'Archivo Narrow', sans-serif; font-size: 13px; letter-spacing: 0.2em; color: #5BC9B0;">02</span>
+      <h2 style="margin: 0; font-family: Anton, sans-serif; font-size: 30px; text-transform: uppercase;">Open source</h2>
+    </div>
+
+    <div style="display: grid; grid-template-columns: repeat(auto-fill, minmax(320px, 1fr)); gap: 18px;">
+      <a href="https://github.com/pawelsiwek/azurewaf" class="reveal" style="display: flex; flex-direction: column; gap: 12px; background: #121829; border: 1px solid #26304B; padding: 22px; min-height: 210px; position: relative; overflow: hidden;" style-hover="border-color: #5BC9B0; background: #151D33;">
+        <div style="display: flex; justify-content: space-between; align-items: flex-start; gap: 12px;">
+          <span style="font-family: 'JetBrains Mono', monospace; font-size: 16px; font-weight: 700; color: #FFFFFF; word-break: break-word;">azurewaf</span>
+          <span style="font-family: 'JetBrains Mono', monospace; font-size: 10px; letter-spacing: 0.1em; color: #5BC9B0; border: 1px solid #5BC9B0; padding: 3px 7px; flex: none;">WAF SANDBOX</span>
+        </div>
+        <span style="font-size: 14px; line-height: 1.55; color: #C5C6CB;">Snippets, demos and proofs of concept from my Well-Architected talks, organised by the five pillars. Currently ships Azure Auto-Tagging: a Function that stamps <span style="font-family: 'JetBrains Mono', monospace; color: #FFC000;">created-by</span> and <span style="font-family: 'JetBrains Mono', monospace; color: #FFC000;">modified-by</span> on every resource, so cost tracking finally has an owner.</span>
+        <div style="margin-top: auto; display: flex; flex-wrap: wrap; gap: 12px; align-items: center; font-family: 'JetBrains Mono', monospace; font-size: 11px; color: #6C7285;">
+          <span style="display: flex; align-items: center; gap: 6px;"><span style="width: 9px; height: 9px; background: #5BC9B0; display: inline-block; border-radius: 50%;"></span>Azure Functions (.NET 8)</span>
+          <span>Event Grid</span><span>Bicep</span>
+          <span style="margin-left: auto;">MIT</span>
+        </div>
+        <div style="position: absolute; left: 0; bottom: 0; height: 2px; width: 100%; background: linear-gradient(90deg, #5BC9B0, transparent);"></div>
+      </a>
+
+      <a href="https://github.com/pawelsiwek/global-azure-2025-gdn" class="reveal" style="display: flex; flex-direction: column; gap: 12px; background: #121829; border: 1px solid #26304B; padding: 22px; min-height: 210px; position: relative; overflow: hidden;" style-hover="border-color: #29B6F6; background: #151D33;">
+        <div style="display: flex; justify-content: space-between; align-items: flex-start; gap: 12px;">
+          <span style="font-family: 'JetBrains Mono', monospace; font-size: 16px; font-weight: 700; color: #FFFFFF; word-break: break-word;">global-azure-2025-gdn</span>
+          <span style="font-family: 'JetBrains Mono', monospace; font-size: 10px; letter-spacing: 0.1em; color: #29B6F6; border: 1px solid #29B6F6; padding: 3px 7px; flex: none;">WORKSHOP</span>
+        </div>
+        <span style="font-size: 14px; line-height: 1.55; color: #C5C6CB;">Full hands-on workshop from Global Azure Gdańsk: deploying to Azure with Bicep and GitHub Actions. Six exercises from a hello-world workflow through workload identity, linting and pre-flight validation, up to reusable workflows split across dev and prod.</span>
+        <div style="margin-top: auto; display: flex; flex-wrap: wrap; gap: 12px; align-items: center; font-family: 'JetBrains Mono', monospace; font-size: 11px; color: #6C7285;">
+          <span style="display: flex; align-items: center; gap: 6px;"><span style="width: 9px; height: 9px; background: #29B6F6; display: inline-block; border-radius: 50%;"></span>Bicep</span>
+          <span>GitHub Actions</span><span>Bash</span>
+          <span style="margin-left: auto;">MIT</span>
+        </div>
+        <div style="position: absolute; left: 0; bottom: 0; height: 2px; width: 100%; background: linear-gradient(90deg, #29B6F6, transparent);"></div>
+      </a>
+
+      <a href="https://github.com/pawelsiwek/scripts" class="reveal" style="display: flex; flex-direction: column; gap: 12px; background: #121829; border: 1px solid #26304B; padding: 22px; min-height: 210px; position: relative; overflow: hidden;" style-hover="border-color: #8E92E8; background: #151D33;">
+        <div style="display: flex; justify-content: space-between; align-items: flex-start; gap: 12px;">
+          <span style="font-family: 'JetBrains Mono', monospace; font-size: 16px; font-weight: 700; color: #FFFFFF; word-break: break-word;">scripts</span>
+          <span style="font-family: 'JetBrains Mono', monospace; font-size: 10px; letter-spacing: 0.1em; color: #8E92E8; border: 1px solid #8E92E8; padding: 3px 7px; flex: none;">TOOLBOX</span>
+        </div>
+        <span style="font-size: 14px; line-height: 1.55; color: #C5C6CB;">Things I reach for in daily DevOps and CloudOps work: a set of Azure monitoring policies, and a generator for Dynatrace GCP extensions.</span>
+        <div style="margin-top: auto; display: flex; flex-wrap: wrap; gap: 12px; align-items: center; font-family: 'JetBrains Mono', monospace; font-size: 11px; color: #6C7285;">
+          <span style="display: flex; align-items: center; gap: 6px;"><span style="width: 9px; height: 9px; background: #8E92E8; display: inline-block; border-radius: 50%;"></span>Azure Policy</span>
+          <span>Dynatrace</span><span>GCP</span>
+          <span style="margin-left: auto;">Apache-2.0</span>
+        </div>
+        <div style="position: absolute; left: 0; bottom: 0; height: 2px; width: 100%; background: linear-gradient(90deg, #8E92E8, transparent);"></div>
+      </a>
+
+      <a href="https://github.com/pawelsiwek/onlynines" class="reveal" style="display: flex; flex-direction: column; gap: 12px; background: #121829; border: 1px solid #26304B; padding: 22px; min-height: 210px; position: relative; overflow: hidden;" style-hover="border-color: #FFC000; background: #151D33;">
+        <div style="display: flex; justify-content: space-between; align-items: flex-start; gap: 12px;">
+          <span style="font-family: 'JetBrains Mono', monospace; font-size: 16px; font-weight: 700; color: #FFFFFF; word-break: break-word;">onlynines</span>
+          <span style="font-family: 'JetBrains Mono', monospace; font-size: 10px; letter-spacing: 0.1em; color: #FFC000; border: 1px solid #FFC000; padding: 3px 7px; flex: none;">CALCULATOR</span>
+        </div>
+        <span style="font-size: 14px; line-height: 1.55; color: #C5C6CB;">How many nines does your architecture actually have once you chain the SLAs? Runs fully client-side.</span>
+        <div style="margin-top: auto; display: flex; flex-wrap: wrap; gap: 12px; align-items: center; font-family: 'JetBrains Mono', monospace; font-size: 11px; color: #6C7285;">
+          <span style="display: flex; align-items: center; gap: 6px;"><span style="width: 9px; height: 9px; background: #FFC000; display: inline-block; border-radius: 50%;"></span>JavaScript</span>
+          <span style="margin-left: auto;">MIT</span>
+        </div>
+        <div style="position: absolute; left: 0; bottom: 0; height: 2px; width: 100%; background: linear-gradient(90deg, #FFC000, transparent);"></div>
+      </a>
+
+    </div>
+    <span style="font-family: 'JetBrains Mono', monospace; font-size: 12px; color: #6C7285;">More at <a href="https://github.com/pawelsiwek">github.com/pawelsiwek</a></span>
+  </section>
+
+  <section style="width: 100%; max-width: 1120px; position: relative; z-index: 2; padding-top: 72px;">
+    <div style="background: #5BC9B0; padding: 38px 34px; display: flex; flex-wrap: wrap; gap: 28px; justify-content: space-between; align-items: center;">
+      <div style="display: flex; flex-direction: column; gap: 10px; min-width: 0;">
+        <span style="font-family: 'Archivo Narrow', sans-serif; font-size: 12px; letter-spacing: 0.2em; color: rgba(11,14,24,0.6);">AZURE MEETUPS IN GDAŃSK</span>
+        <span style="font-family: Anton, sans-serif; font-size: clamp(28px, 4.4vw, 46px); line-height: 0.96; text-transform: uppercase; color: #0B0E18;">Come. <span style="color: rgba(11,14,24,0.45);">Or speak.</span></span>
+        <span style="font-size: 15px; line-height: 1.55; color: rgba(11,14,24,0.78); max-width: 34em;">I also run the Azure User Group meetups in Gdańsk. Want to attend — or have a talk of your own to give? Reach out on LinkedIn.</span>
+      </div>
+      <div style="display: flex; flex-direction: column; gap: 10px; min-width: 210px;">
+        <a href="https://www.linkedin.com/in/pawelsiwek/" style="font-family: 'Archivo Narrow', sans-serif; font-size: 13px; font-weight: 700; letter-spacing: 0.14em; text-transform: uppercase; color: #5BC9B0; background: #0B0E18; padding: 13px 18px; text-align: center;" style-hover="color: #88CAB6;">Reach out on LinkedIn</a>
+        <span style="font-family: 'Archivo Narrow', sans-serif; font-size: 12px; color: rgba(11,14,24,0.6); text-align: center;">Conference invitations: <a href="https://sessionize.com/pawel-siwek/" style="color: rgba(11,14,24,0.8);">Sessionize</a></span>
+      </div>
+    </div>
+  </section>
+
+  <footer style="width: 100%; max-width: 1120px; position: relative; z-index: 2; padding-top: 56px; display: flex; flex-wrap: wrap; gap: 14px; justify-content: space-between; align-items: center; font-family: 'Archivo Narrow', sans-serif; font-size: 12px; letter-spacing: 0.14em; color: #6C7285;">
+    <span>© 1993–<span class="js-year">2026</span> Paweł Siwek · Gdańsk, Poland</span>
+    <span>This site runs on Cloudflare free tier. Monthly bill: €0.00. Cost optimization starts at home.</span>
+    <a href="/" style="color: #6C7285;">← BACK TO THE GAME</a>
+  </footer>
+</div>
+</x-dc>
+<script>(function(){var yr=new Date().getFullYear();document.querySelectorAll('.js-year').forEach(function(e){e.textContent=yr});})();</script>
+<script type="text/x-dc" data-dc-script data-props="{&quot;$preview&quot;:{&quot;width&quot;:1200,&quot;height&quot;:900}}">
+const LINES = [
+  'az account show --query name',
+  'git clone siwek.cloud/waf',
+  'kubectl get talks --all-namespaces'
+];
+
+class Component extends DCLogic {
+  state = { typed: '' };
+
+  componentDidMount(){
+    this.li = 0; this.ci = 0; this.dir = 1;
+    this.timer = setInterval(() => {
+      const line = LINES[this.li];
+      if (this.dir === 1){
+        this.ci++;
+        if (this.ci > line.length){ this.dir = -1; this.pause = 16; }
+      } else if (this.pause > 0){ this.pause--; return; }
+      else {
+        this.ci--;
+        if (this.ci <= 0){ this.dir = 1; this.li = (this.li + 1) % LINES.length; }
+      }
+      this.setState({ typed: line.slice(0, Math.max(0, this.ci)) });
+    }, 62);
+
+    this.io = new IntersectionObserver((entries) => {
+      entries.forEach(e => { if (e.isIntersecting){ e.target.classList.add('on'); this.io.unobserve(e.target); } });
+    }, { threshold: 0.15 });
+    const root = document.querySelector('x-dc') || document;
+    setTimeout(() => {
+      root.querySelectorAll('.reveal').forEach((el, i) => {
+        el.style.transitionDelay = (i % 4) * 70 + 'ms';
+        this.io.observe(el);
+      });
+    }, 60);
+  }
+
+  componentWillUnmount(){
+    clearInterval(this.timer);
+    if (this.io) this.io.disconnect();
+  }
+
+  renderVals(){
+    return { typed: this.state.typed };
+  }
+}
+</script>
+<noscript>
+  <style>x-dc { display: block; font-family: Archivo, sans-serif; background: #0B0E18; color: #fff; padding: 40px; }</style>
+  <p><strong>Paweł Siwek</strong> — Principal Product Architect at Dynatrace · Microsoft Azure MVP. Conference talks on Azure Well-Architected Framework, cost optimization, mission-critical workloads, and AI observability. Open source tools for Azure and Dynatrace. Based in Gdańsk, Poland.</p>
+</noscript>
+</body>
+</html>

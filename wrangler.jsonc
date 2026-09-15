@@ -1,0 +1,15 @@
+{
+  "name": "pawelsiwekslides",
+  "compatibility_date": "2026-09-11",
+  "observability": {
+    "enabled": true
+  },
+  "workers_dev": true,
+  "routes": [
+    {"pattern": "siwek.cloud/*", "zone_name": "siwek.cloud"},
+    {"pattern": "siwek.cloud/", "zone_name": "siwek.cloud"}
+  ],
+  "assets": {
+    "directory": "public"
+  }
+}

@@ -1,0 +1,808 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Paweł Siwek — Principal Product Architect at Dynatrace · Microsoft Azure MVP</title>
+<meta name="description" content="Twenty years in the IT trenches, from Turbo Pascal to Azure. Principal Product Architect at Dynatrace · Microsoft Azure MVP. Play Legacy Dash — a Boulder Dash tribute about cloud tech debt.">
+<meta property="og:title" content="Paweł Siwek — Principal Product Architect at Dynatrace · Microsoft Azure MVP">
+<meta property="og:description" content="Azure Well-Architected, AI-driven observability, and a Boulder Dash tribute you can actually play.">
+<meta property="og:type" content="website">
+<meta property="og:url" content="https://siwek.cloud">
+<meta property="og:image" content="https://siwek.cloud/logo/favicon-512.png">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Paweł Siwek — Principal Product Architect at Dynatrace · Microsoft Azure MVP">
+<meta name="twitter:description" content="Azure Well-Architected, AI-driven observability, and a Boulder Dash tribute you can actually play.">
+<meta name="twitter:image" content="https://siwek.cloud/logo/favicon-512.png">
+<link rel="icon" type="image/png" sizes="32x32" href="/logo/favicon-32.png">
+<link rel="icon" type="image/png" sizes="16x16" href="/logo/favicon-16.png">
+<link rel="apple-touch-icon" href="/logo/apple-touch-icon.png">
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "Person",
+  "name": "Paweł Siwek",
+  "jobTitle": "Principal Product Architect",
+  "worksFor": {"@type": "Organization", "name": "Dynatrace"},
+  "url": "https://siwek.cloud",
+  "sameAs": [
+    "https://www.linkedin.com/in/pawelsiwek/",
+    "https://github.com/pawelsiwek",
+    "https://sessionize.com/pawel-siwek/",
+    "https://www.credly.com/badges/79d11b19-ae03-47d4-b3da-6adfbe7925df"
+  ],
+  "address": {"@type": "PostalAddress", "addressLocality": "Gdańsk", "addressCountry": "PL"}
+}
+</script>
+<script src="/support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Anton&family=Archivo:wght@400;600;700&family=Archivo+Narrow:wght@700&family=JetBrains+Mono:wght@400;700&display=swap" rel="stylesheet">
+<style>
+  * { box-sizing: border-box; }
+  html, body { margin: 0; background: #0B0E18; }
+  a { color: #5BC9B0; text-decoration: none; }
+  a:hover { color: #88CAB6; }
+  @keyframes scan { 0% { transform: translateY(-100%); } 100% { transform: translateY(100%); } }
+  @keyframes pulse { 0%, 100% { opacity: 0.55; } 50% { opacity: 1; } }
+  @keyframes flicker { 0%, 96%, 100% { opacity: 1; } 97% { opacity: 0.72; } 98.5% { opacity: 0.9; } }
+  @keyframes rise { from { opacity: 0; transform: translateY(14px); } to { opacity: 1; transform: translateY(0); } }
+</style>
+</helmet>
+
+<div style="font-family: Archivo, sans-serif; background: #0B0E18; color: #FFFFFF; min-height: 100vh; display: flex; flex-direction: column; align-items: center; padding: 0 20px 80px; position: relative; overflow: hidden;">
+
+  <div style="position: fixed; inset: 0; pointer-events: none; z-index: 3; background: repeating-linear-gradient(180deg, rgba(0,0,0,0) 0px, rgba(0,0,0,0) 2px, rgba(0,0,0,0.16) 3px, rgba(0,0,0,0) 4px);"></div>
+  <div style="position: fixed; inset: 0; pointer-events: none; z-index: 3; background: radial-gradient(120% 90% at 50% 40%, rgba(0,0,0,0) 45%, rgba(0,0,0,0.55) 100%);"></div>
+  <div style="position: fixed; left: 0; right: 0; height: 140px; pointer-events: none; z-index: 3; background: linear-gradient(180deg, rgba(91,201,176,0) 0%, rgba(91,201,176,0.05) 50%, rgba(91,201,176,0) 100%); animation: scan 7s linear infinite;"></div>
+  <div style="position: absolute; top: -220px; left: 50%; width: 1100px; height: 620px; transform: translateX(-50%); pointer-events: none; background: radial-gradient(50% 50% at 50% 50%, rgba(91,201,176,0.14) 0%, rgba(11,14,24,0) 70%);"></div>
+
+  <header style="width: 100%; max-width: 1120px; display: flex; justify-content: space-between; align-items: center; padding: 26px 0; position: relative; z-index: 2;">
+    <div style="display: flex; align-items: center; gap: 14px;">
+      <img src="/logo/siwek-cloud-mark.svg" alt="siwek.cloud" style="width: 40px; height: 40px; image-rendering: pixelated;">
+      <div style="display: flex; flex-direction: column; gap: 2px;">
+        <span style="font-family: Anton, sans-serif; font-size: 22px; line-height: 1; text-transform: uppercase;">SIWEK<span style="color: #5BC9B0;">.CLOUD</span></span>
+        <span style="font-family: 'Archivo Narrow', sans-serif; font-size: 10px; letter-spacing: 0.2em; color: #6C7285;">PRINCIPAL PRODUCT ARCHITECT · DYNATRACE · AZURE MVP</span>
+      </div>
+    </div>
+    <nav style="display: flex; gap: 22px; align-items: center; font-family: 'Archivo Narrow', sans-serif; font-size: 13px; letter-spacing: 0.14em; text-transform: uppercase;">
+      <a href="/waf/" style="color: #C5C6CB;">Talks &amp; open source</a>
+      <a href="https://github.com/pawelsiwek" style="color: #C5C6CB;">GitHub</a>
+      <a href="https://sessionize.com/pawel-siwek/" style="color: #C5C6CB;">Sessionize</a>
+    </nav>
+  </header>
+
+  <section style="width: 100%; max-width: 1120px; display: flex; flex-direction: column; gap: 10px; padding: 18px 0 26px; position: relative; z-index: 2; animation: rise 0.6s ease both;">
+    <span style="font-family: 'Archivo Narrow', sans-serif; font-size: 13px; letter-spacing: 0.22em; color: #5BC9B0;">DIG THROUGH THE LEGACY · COLLECT THE SERVICES · SHIP</span>
+    <h1 style="margin: 0; font-family: Anton, sans-serif; font-size: clamp(38px, 7vw, 86px); line-height: 0.92; text-transform: uppercase; animation: flicker 9s linear infinite;">LEGACY <span style="color: #5BC9B0;">DASH</span></h1>
+    <p style="margin: 0; font-size: 17px; line-height: 1.6; color: #C5C6CB; text-wrap: pretty;">Paweł Siwek — Principal Product Architect at Dynatrace · <a href="https://www.credly.com/badges/79d11b19-ae03-47d4-b3da-6adfbe7925df" style="color: #C5C6CB;">Microsoft Azure MVP</a>. <span class="js-years-since-1993">33</span> years since my first line of Turbo Pascal — and hand-tuning autoexec.bat and config.sys to squeeze every last KB out of a 286. These days I design enterprise observability for companies running thousands of Azure, AWS and GCP subscriptions, using AI to make monitoring without blind spots work like blind-spot assist in a car: always watching, nothing to configure.</p>
+    <p style="margin: 8px 0 0; font-size: 17px; line-height: 1.6; color: #C5C6CB; text-wrap: pretty;">I break systems, then talk about what broke. Here you get to try it yourself: dig the services out of the tech debt, watch for falling monoliths, reach the portal.</p>
+  </section>
+
+  <section style="width: 100%; max-width: 1120px; position: relative; z-index: 2; display: flex; flex-direction: column; gap: 12px;">
+    <div style="display: flex; flex-wrap: wrap; gap: 10px; align-items: stretch; font-family: 'JetBrains Mono', monospace; font-size: 12px;">
+      <div style="flex: 1; min-width: 130px; background: #121829; border: 1px solid #26304B; padding: 10px 14px; display: flex; flex-direction: column; gap: 4px;"><span style="font-family: 'Archivo Narrow', sans-serif; font-size: 10px; letter-spacing: 0.16em; color: #6C7285;">LEVEL</span><span style="font-size: 18px; font-weight: 700; color: #FFFFFF;">{{ levelName }}</span></div>
+      <div style="flex: 1; min-width: 130px; background: #121829; border: 1px solid #26304B; padding: 10px 14px; display: flex; flex-direction: column; gap: 6px;"><span style="font-family: 'Archivo Narrow', sans-serif; font-size: 10px; letter-spacing: 0.16em; color: #6C7285;">SERVICES</span><canvas ref="{{ glyphStripRef }}" style="display:block;image-rendering:pixelated;" title="{{ gemLabel }}"></canvas></div>
+      <div style="flex: 1; min-width: 110px; background: #121829; border: 1px solid #26304B; padding: 10px 14px; display: flex; flex-direction: column; gap: 4px;"><span style="font-family: 'Archivo Narrow', sans-serif; font-size: 10px; letter-spacing: 0.16em; color: #6C7285;">SLO BUDGET</span><span style="font-size: 18px; font-weight: 700; color: {{ timeColor }};">{{ timeLabel }}</span></div>
+      <div style="flex: 1; min-width: 110px; background: #121829; border: 1px solid #26304B; padding: 10px 14px; display: flex; flex-direction: column; gap: 4px;"><span style="font-family: 'Archivo Narrow', sans-serif; font-size: 10px; letter-spacing: 0.16em; color: #6C7285;">RETRIES</span><span style="font-size: 18px; font-weight: 700; color: #FFC000;">{{ livesLabel }}</span></div>
+      <div style="flex: 2; min-width: 190px; background: #121829; border: 1px solid #26304B; padding: 10px 14px; display: flex; flex-direction: column; gap: 6px;"><span style="font-family: 'Archivo Narrow', sans-serif; font-size: 10px; letter-spacing: 0.16em; color: #6C7285;">LAST DEPLOYED</span><span style="font-size: 16px; font-weight: 700; color: #29B6F6; display:flex; align-items:center; gap:7px;"><canvas ref="{{ lastGlyphRef }}" style="display:inline-block;image-rendering:pixelated;flex:none;"></canvas>{{ lastPicked }}</span></div>
+    </div>
+
+    <div style="position: relative; background: #080B14; border: 1px solid #26304B; box-shadow: 0 0 0 1px rgba(91,201,176,0.08), 0 30px 80px rgba(0,0,0,0.6);">
+      <canvas ref="{{ canvasRef }}" style="display: block; width: 100%; height: auto; image-rendering: pixelated;"></canvas>
+      <div style="position: absolute; inset: 0; pointer-events: none; background: repeating-linear-gradient(180deg, rgba(0,0,0,0) 0px, rgba(0,0,0,0) 2px, rgba(0,0,0,0.22) 3px, rgba(0,0,0,0) 4px);"></div>
+
+      <div style="position: absolute; inset: 0; display: {{ overlayDisplay }}; align-items: center; justify-content: center; background: rgba(8,11,20,0.9); padding: 24px;">
+        <div style="max-width: 520px; display: flex; flex-direction: column; gap: 16px; align-items: flex-start;">
+          <span style="font-family: 'Archivo Narrow', sans-serif; font-size: 12px; letter-spacing: 0.2em; color: #5BC9B0;">{{ overlayKicker }}</span>
+          <span style="font-family: Anton, sans-serif; font-size: clamp(30px, 5vw, 54px); line-height: 0.94; text-transform: uppercase;">{{ overlayTitle }}</span>
+          <span style="font-size: 15px; line-height: 1.6; color: #C5C6CB;">{{ overlayBody }}</span>
+          <button onClick="{{ onStart }}" style="font-family: 'Archivo Narrow', sans-serif; font-size: 15px; font-weight: 700; letter-spacing: 0.16em; text-transform: uppercase; color: #0B0E18; background: #5BC9B0; border: 0; padding: 14px 28px; cursor: pointer;" style-hover="background: #88CAB6;">{{ overlayButton }}</button>
+          <span style="font-family: 'JetBrains Mono', monospace; font-size: 12px; color: #6C7285; line-height: 1.7;">↑ ↓ ← → or WASD — move and dig<br>R — restart level · P — pause</span>
+        </div>
+      </div>
+    </div>
+
+    <div style="display: flex; flex-wrap: wrap; gap: 16px; justify-content: space-between; align-items: center; font-family: 'JetBrains Mono', monospace; font-size: 12px; color: #6C7285;">
+      <div style="display: flex; flex-wrap: wrap; gap: 18px; align-items: center;">
+        <span style="display: flex; align-items: center; gap: 7px;"><span style="width: 13px; height: 13px; background: #5BC9B0; display: inline-block;"></span>service — collect it</span>
+        <span style="display: flex; align-items: center; gap: 7px;"><span style="width: 13px; height: 13px; background: #6B7280; display: inline-block;"></span>monolith — falls and kills</span>
+        <span style="display: flex; align-items: center; gap: 7px;"><span style="width: 13px; height: 13px; background: #1B2440; display: inline-block;"></span>tech debt — dig through it</span>
+        <span style="display: flex; align-items: center; gap: 7px;"><span style="width: 13px; height: 13px; background: #29B6F6; display: inline-block;"></span>portal — the way out</span>
+      </div>
+      <span>{{ hintLine }}</span>
+    </div>
+
+    <div style="display: grid; grid-template-columns: repeat(3, 64px); gap: 8px; justify-content: center; padding-top: 6px;">
+      <span></span>
+      <button onClick="{{ onUp }}" style="font-family: 'JetBrains Mono', monospace; font-size: 18px; color: #C5C6CB; background: #121829; border: 1px solid #26304B; padding: 14px 0; cursor: pointer;" style-hover="border-color: #5BC9B0;">↑</button>
+      <span></span>
+      <button onClick="{{ onLeft }}" style="font-family: 'JetBrains Mono', monospace; font-size: 18px; color: #C5C6CB; background: #121829; border: 1px solid #26304B; padding: 14px 0; cursor: pointer;" style-hover="border-color: #5BC9B0;">←</button>
+      <button onClick="{{ onDown }}" style="font-family: 'JetBrains Mono', monospace; font-size: 18px; color: #C5C6CB; background: #121829; border: 1px solid #26304B; padding: 14px 0; cursor: pointer;" style-hover="border-color: #5BC9B0;">↓</button>
+      <button onClick="{{ onRight }}" style="font-family: 'JetBrains Mono', monospace; font-size: 18px; color: #C5C6CB; background: #121829; border: 1px solid #26304B; padding: 14px 0; cursor: pointer;" style-hover="border-color: #5BC9B0;">→</button>
+    </div>
+  </section>
+
+  <!-- NOW: update NOW_DATE and NOW_ITEMS when shipping something new. A stale "Now" is worse than no "Now". -->
+  <section style="width: 100%; max-width: 1120px; position: relative; z-index: 2; padding-top: 32px;">
+    <div style="background: #121829; border: 1px solid #26304B; border-left: 3px solid #5BC9B0; padding: 18px 24px; display: flex; flex-wrap: wrap; gap: 24px; align-items: flex-start;">
+      <div style="display: flex; flex-direction: column; gap: 4px; min-width: 110px;">
+        <span style="font-family: 'Archivo Narrow', sans-serif; font-size: 10px; letter-spacing: 0.16em; color: #6C7285;">STATUS</span>
+        <!-- NOW_DATE: update this string when shipping something new -->
+        <span style="font-family: 'JetBrains Mono', monospace; font-size: 15px; font-weight: 700; color: #5BC9B0;">2026-09</span>
+      </div>
+      <div style="display: flex; flex-direction: column; gap: 6px;">
+        <span style="font-family: 'Archivo Narrow', sans-serif; font-size: 10px; letter-spacing: 0.16em; color: #6C7285;">CURRENTLY SHIPPING</span>
+        <!-- NOW_ITEMS: update when shipping something new -->
+        <span style="font-size: 14px; line-height: 1.5; color: #C5C6CB;">HAI — demo app for <em>Azure WAF: Designing AI Workloads in Practice</em> (AI&lt;&gt;BA, Katowice)</span>
+        <!-- time-boxed: remove after 2026-10-28 -->
+        <span style="font-size: 14px; line-height: 1.5; color: #C5C6CB;">Dev Days Gdańsk — hands-on GitHub Copilot workshop · Oct 28, 6–9 PM, Olivia Six (<a href="https://lu.ma/tjq6i6s5" style="color: #5BC9B0;">register</a>)</span>
+      </div>
+    </div>
+  </section>
+
+  <section style="width: 100%; max-width: 1120px; position: relative; z-index: 2; padding-top: 64px; display: grid; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); gap: 22px;">
+    <div style="display: flex; flex-direction: column; gap: 10px; border-top: 2px solid #5BC9B0; padding-top: 16px;">
+      <span style="font-family: Anton, sans-serif; font-size: 22px; text-transform: uppercase;">What I do</span>
+      <span style="font-size: 15px; line-height: 1.6; color: #C5C6CB;">I'm a technology geek. The path ran from Turbo Pascal through C# and Azure platform architecture to where I am now: Principal Product Architect at Dynatrace, working on autonomous observability for Azure, AWS and Google Cloud — deterministic pipelines do the ingestion and processing, AI does the reasoning on top.</span>
+    </div>
+    <div style="display: flex; flex-direction: column; gap: 10px; border-top: 2px solid #29B6F6; padding-top: 16px;">
+      <span style="font-family: Anton, sans-serif; font-size: 22px; text-transform: uppercase;">What I talk about</span>
+      <span style="font-size: 15px; line-height: 1.6; color: #C5C6CB;">Azure Well-Architected Framework on real failures: cost optimization, mission-critical workloads, monitoring that does not explode over time. <a href="/waf/">Talks and open source →</a></span>
+    </div>
+    <div style="display: flex; flex-direction: column; gap: 10px; border-top: 2px solid #FFC000; padding-top: 16px;">
+      <span style="font-family: Anton, sans-serif; font-size: 22px; text-transform: uppercase;">Community</span>
+      <span style="font-size: 15px; line-height: 1.6; color: #C5C6CB;">I run the Azure User Group meetups in Gdańsk. Want to attend — or have a talk of your own to give? <a href="https://www.linkedin.com/in/pawelsiwek/">LinkedIn is the fastest way to reach me.</a> Code lives on <a href="https://github.com/pawelsiwek">GitHub</a>. Based in Gdańsk, Poland.</span>
+    </div>
+  </section>
+
+  <footer style="width: 100%; max-width: 1120px; position: relative; z-index: 2; padding-top: 56px; display: flex; flex-wrap: wrap; gap: 14px; justify-content: space-between; align-items: center; font-family: 'Archivo Narrow', sans-serif; font-size: 12px; letter-spacing: 0.14em; color: #6C7285;">
+    <span>© 1993–<span class="js-year">2026</span> Paweł Siwek · Gdańsk, Poland</span>
+    <span>This site runs on Cloudflare free tier. Monthly bill: €0.00. Cost optimization starts at home.</span>
+    <span>Boulder Dash was created by Peter Liepa and Chris Gray, 1984. This is a tribute, not a port.</span>
+  </footer>
+</div>
+</x-dc>
+<script>(function(){var yr=new Date().getFullYear();document.querySelectorAll('.js-year').forEach(function(e){e.textContent=yr});document.querySelectorAll('.js-years-since-1993').forEach(function(e){e.textContent=yr-1993});})();</script>
+<script type="text/x-dc" data-dc-script data-props="{&quot;$preview&quot;:{&quot;width&quot;:1200,&quot;height&quot;:900}}">
+const EMPTY=0, DIRT=1, WALL=2, ROCK=3, GEM=4, EXIT=5, STEEL=6;
+
+// Update NOW when you ship something new — it shows in the LAST DEPLOYED tile on the home page.
+const NOW = 'HAI app · meetups · 2026-09';
+
+// Legacy Dash — service glyphs (16x16 pixel maps). X = pixel, dot = empty.
+// Original shapes inspired by Azure metaphors; not derived from official icons.
+const GLYPHS = {
+  CA: [
+    "................",
+    "......XXXX......",
+    ".....X....X.....",
+    "....X......X....",
+    "...X........X...",
+    "...X..XXXX..X...",
+    "...X..X..X..X...",
+    "...X..X..X..X...",
+    "...X..XXXX..X...",
+    "...X........X...",
+    "....X......X....",
+    ".....X....X.....",
+    "......XXXX......",
+    "................",
+    "................",
+    "................",
+  ],
+  AOAI: [
+    "................",
+    "......X.........",
+    "......X.........",
+    ".....XXX........",
+    "....XXXXX.......",
+    "..XXXXXXXXX.....",
+    "....XXXXX.......",
+    ".....XXX........",
+    "......X.....X...",
+    "......X....XXX..",
+    "..........XXXXX.",
+    "...........XXX..",
+    "............X...",
+    "................",
+    "................",
+    "................",
+  ],
+  KV: [
+    "................",
+    ".....XXXX.......",
+    "....X....X......",
+    "....X....X......",
+    "....X....X......",
+    ".....XXXX.......",
+    ".......X........",
+    ".......X........",
+    ".......X........",
+    ".......XXX......",
+    ".......X........",
+    ".......XXX......",
+    ".......X........",
+    "................",
+    "................",
+    "................",
+  ],
+  ST: [
+    "................",
+    "...XXXXXXXXXX...",
+    "...X........X...",
+    "...X........X...",
+    "...XXXXXXXXXX...",
+    "...X........X...",
+    "...X........X...",
+    "...XXXXXXXXXX...",
+    "...X........X...",
+    "...X........X...",
+    "...XXXXXXXXXX...",
+    "................",
+    "................",
+    "................",
+    "................",
+    "................",
+  ],
+  COS: [
+    "................",
+    ".....XXXXXX.....",
+    "....X......X....",
+    "...X........X...",
+    "...X........X...",
+    "XX.X........X.XX",
+    "...X........X...",
+    "...X........X...",
+    "....X......X....",
+    ".....XXXXXX.....",
+    "................",
+    "................",
+    "................",
+    "................",
+    "................",
+    "................",
+  ],
+  AFD: [
+    "................",
+    ".....XXXXXX.....",
+    "....X......X....",
+    "....X......X....",
+    "....X......X....",
+    "....X......X....",
+    "....X....X.X....",
+    "....X....X.X....",
+    "....X......X....",
+    "....X......X....",
+    "....X......X....",
+    "....X......X....",
+    "...XXXXXXXXXX...",
+    "................",
+    "................",
+    "................",
+  ],
+  SB: [
+    "................",
+    "................",
+    "...XXXXXXXXXX...",
+    "...X........X...",
+    "...XX......XX...",
+    "...X.X....X.X...",
+    "...X..X..X..X...",
+    "...X...XX...X...",
+    "...X........X...",
+    "...X........X...",
+    "...XXXXXXXXXX...",
+    "................",
+    "................",
+    "................",
+    "................",
+    "................",
+  ],
+  LAW: [
+    "................",
+    ".....XXXX.......",
+    "....X....X......",
+    "...X......X.....",
+    "...X......X.....",
+    "...X......X.....",
+    "....X....X......",
+    ".....XXXX.X.....",
+    "...........XX...",
+    "............XX..",
+    "................",
+    ".X...XX.........",
+    ".XX.XX.XX....X..",
+    "..XXX...XX..XX..",
+    ".........XXXX...",
+    "................",
+  ],
+  APIM: [
+    "................",
+    "................",
+    "..........X.....",
+    ".........X......",
+    "....X....X..X...",
+    "...X....X....X..",
+    "..X.....X.....X.",
+    "...X...X.....X..",
+    "....X..X....X...",
+    ".......X........",
+    "......X.........",
+    "................",
+    "................",
+    "................",
+    "................",
+    "................",
+  ],
+  FUNC: [
+    "................",
+    "........XX......",
+    ".......XX.......",
+    "......XX........",
+    ".....XX.........",
+    "....XXXXXXXX....",
+    "..........XX....",
+    ".........XX.....",
+    "........XX......",
+    ".......XX.......",
+    "......XX........",
+    ".....XX.........",
+    "....XX..........",
+    "................",
+    "................",
+    "................",
+  ],
+};
+
+function drawGlyph(ctx, code, x, y, px, color) {
+  const map = GLYPHS[code];
+  if (!map) return;
+  ctx.fillStyle = color;
+  for (let r = 0; r < map.length; r++) {
+    const row = map[r];
+    for (let c = 0; c < row.length; c++) {
+      if (row[c] === 'X') ctx.fillRect(x + c * px, y + r * px, px, px);
+    }
+  }
+}
+
+const SERVICES = [
+  { code:'CA',  name:'Container Apps',   c:'#5BC9B0' },
+  { code:'AOAI',name:'Azure OpenAI',     c:'#29B6F6' },
+  { code:'KV',  name:'Key Vault',        c:'#8E92E8' },
+  { code:'ST',  name:'Storage',          c:'#5BC9B0' },
+  { code:'COS', name:'Cosmos DB',        c:'#29B6F6' },
+  { code:'AFD', name:'Front Door',       c:'#8E92E8' },
+  { code:'SB',  name:'Service Bus',      c:'#5BC9B0' },
+  { code:'LAW', name:'Log Analytics',    c:'#29B6F6' },
+  { code:'APIM',name:'API Management',   c:'#8E92E8' },
+  { code:'FUNC',name:'Functions',        c:'#5BC9B0' }
+];
+
+// Level names = the five Azure Well-Architected Framework pillars.
+const LEVELS = [
+  { name:'COST OPTIMIZATION',      need:6,  rocks:0.09, gems:0.040, time:160, seed:1337 },
+  { name:'RELIABILITY',            need:10, rocks:0.15, gems:0.048, time:150, seed:2718 },
+  { name:'SECURITY',               need:14, rocks:0.20, gems:0.052, time:145, seed:3141 },
+  { name:'OPS EXCELLENCE',         need:18, rocks:0.24, gems:0.055, time:140, seed:4242 },
+  { name:'PERF EFFICIENCY',        need:22, rocks:0.27, gems:0.058, time:130, seed:5678 }
+];
+
+const COLS = 32, ROWS = 18, TILE = 34;
+
+function rng(seed){ let s = seed >>> 0; return () => { s ^= s << 13; s >>>= 0; s ^= s >> 17; s ^= s << 5; s >>>= 0; return s / 4294967296; }; }
+
+class Component extends DCLogic {
+  state = { phase:'intro', level:0, score:0, collected:0, need:8, time:150, lives:3, last:'—' };
+
+  componentDidMount(){
+    this.keys = {};
+    this.dir = null;
+    this.onKey = (e) => {
+      const k = e.key.toLowerCase();
+      const map = { arrowup:'up', w:'up', arrowdown:'down', s:'down', arrowleft:'left', a:'left', arrowright:'right', d:'right' };
+      if (map[k]) { e.preventDefault(); this.dir = map[k]; this.held = map[k]; }
+      if (k === 'r' && this.state.phase === 'play') this.loadLevel(this.state.level);
+      if (k === 'p' && (this.state.phase === 'play' || this.state.phase === 'paused'))
+        this.setState(s => ({ phase: s.phase === 'play' ? 'paused' : 'play' }));
+      if ((k === ' ' || k === 'enter') && this.state.phase !== 'play') { e.preventDefault(); this.start(); }
+    };
+    this.onKeyUp = (e) => {
+      const k = e.key.toLowerCase();
+      const map = { arrowup:'up', w:'up', arrowdown:'down', s:'down', arrowleft:'left', a:'left', arrowright:'right', d:'right' };
+      if (map[k] && this.held === map[k]) this.held = null;
+    };
+    window.addEventListener('keydown', this.onKey);
+    window.addEventListener('keyup', this.onKeyUp);
+    this.loadLevel(0);
+    this._buildGlyphCache();
+    this.acc = 0; this.lastT = performance.now(); this.tsec = 0;
+    this.loop = (t) => {
+      const dt = Math.min(64, t - this.lastT); this.lastT = t;
+      if (this.state.phase === 'play'){
+        this.acc += dt; this.tsec += dt;
+        while (this.acc >= 115){ this.acc -= 115; this.tick(); }
+        if (this.tsec >= 1000){ this.tsec -= 1000; this.setState(s => {
+          const nt = s.time - 1;
+          if (nt <= 0) { this.die('SLO BUDGET EXHAUSTED'); return { time:0 }; }
+          return { time: nt };
+        }); }
+      } else { this.acc = 0; }
+      this.draw();
+      this.raf = requestAnimationFrame(this.loop);
+    };
+    this.raf = requestAnimationFrame(this.loop);
+  }
+
+  componentWillUnmount(){
+    cancelAnimationFrame(this.raf);
+    window.removeEventListener('keydown', this.onKey);
+    window.removeEventListener('keyup', this.onKeyUp);
+  }
+
+  loadLevel(idx){
+    const L = LEVELS[Math.min(idx, LEVELS.length-1)];
+    const r = rng(L.seed + idx*97);
+    const g = new Uint8Array(COLS*ROWS);
+    const meta = {};
+    for (let y=0;y<ROWS;y++) for (let x=0;x<COLS;x++){
+      const i = y*COLS+x;
+      if (x===0||y===0||x===COLS-1||y===ROWS-1){ g[i]=STEEL; continue; }
+      const v = r();
+      if (v < L.rocks) g[i]=ROCK;
+      else if (v < L.rocks + L.gems) { g[i]=GEM; meta[i]=SERVICES[Math.floor(r()*SERVICES.length)]; }
+      else if (v < L.rocks + L.gems + 0.05) g[i]=WALL;
+      else g[i]=DIRT;
+    }
+    // kieszen startowa
+    const px = 2, py = 2;
+    for (let y=py-1;y<=py+1;y++) for (let x=px-1;x<=px+1;x++){
+      const i=y*COLS+x; if (g[i]!==STEEL) g[i]=EMPTY;
+    }
+    // wyjscie w przeciwleglym rogu
+    this.exit = { x: COLS-3, y: ROWS-3 };
+    const ei = this.exit.y*COLS + this.exit.x;
+    g[ei] = EMPTY;
+    // policz gemy, dopelnij jesli za malo
+    let count = 0; for (let i=0;i<g.length;i++) if (g[i]===GEM) count++;
+    while (count < L.need + 3){
+      const x = 1 + Math.floor(r()*(COLS-2)), y = 1 + Math.floor(r()*(ROWS-2));
+      const i = y*COLS+x;
+      if (g[i]===DIRT){ g[i]=GEM; meta[i]=SERVICES[Math.floor(r()*SERVICES.length)]; count++; }
+    }
+    this.grid = g; this.meta = meta;
+    this.fall = new Uint8Array(COLS*ROWS);
+    this.player = { x:px, y:py };
+    this.dir = null; this.held = null; this.exitOpen = false; this.shake = 0;
+    this.pickedSvcs = []; this.pickedSet = {}; this.lastSvc = null;
+    this.setState({ level: idx, collected:0, need:L.need, time:L.time, phase: this.state.phase==='intro'?'intro':'play' });
+  }
+
+  at(x,y){ return this.grid[y*COLS+x]; }
+  set(x,y,v){ this.grid[y*COLS+x] = v; }
+
+  tick(){
+    const g = this.grid, nf = new Uint8Array(COLS*ROWS);
+    const moved = new Uint8Array(COLS*ROWS);
+    for (let y=ROWS-2; y>=1; y--){
+      for (let x=1; x<COLS-1; x++){
+        const i = y*COLS+x;
+        if (moved[i]) continue;
+        const t = g[i];
+        if (t!==ROCK && t!==GEM) continue;
+        const below = g[i+COLS];
+        const playerBelow = (this.player.x===x && this.player.y===y+1);
+        if (below===EMPTY){
+          if (playerBelow && this.fall[i]){ this.die(t===ROCK ? 'A MONOLITH LANDED ON YOUR HEAD' : 'A SERVICE LANDED ON YOUR HEAD'); return; }
+          g[i+COLS]=t; g[i]=EMPTY; nf[i+COLS]=1; moved[i+COLS]=1;
+          if (this.meta[i]){ this.meta[i+COLS]=this.meta[i]; delete this.meta[i]; }
+          continue;
+        }
+        if (below===ROCK || below===GEM || below===WALL){
+          if (g[i-1]===EMPTY && g[i+COLS-1]===EMPTY){
+            g[i-1]=t; g[i]=EMPTY; nf[i-1]=1; moved[i-1]=1;
+            if (this.meta[i]){ this.meta[i-1]=this.meta[i]; delete this.meta[i]; }
+            continue;
+          }
+          if (g[i+1]===EMPTY && g[i+COLS+1]===EMPTY){
+            g[i+1]=t; g[i]=EMPTY; nf[i+1]=1; moved[i+1]=1;
+            if (this.meta[i]){ this.meta[i+1]=this.meta[i]; delete this.meta[i]; }
+            continue;
+          }
+        }
+      }
+    }
+    this.fall = nf;
+    const d = this.dir || this.held;
+    if (d) this.move(d);
+    this.dir = null;
+  }
+
+  move(d){
+    const p = this.player;
+    const dx = d==='left'?-1:d==='right'?1:0;
+    const dy = d==='up'?-1:d==='down'?1:0;
+    const nx = p.x+dx, ny = p.y+dy;
+    if (nx<0||ny<0||nx>=COLS||ny>=ROWS) return;
+    const t = this.at(nx,ny);
+    if (t===STEEL||t===WALL) return;
+    if (t===ROCK){
+      if (dy!==0) return;
+      const bx = nx+dx;
+      if (this.at(bx,ny)!==EMPTY) return;
+      this.set(bx,ny,ROCK); this.set(nx,ny,EMPTY);
+    }
+    if (t===GEM){
+      const i = ny*COLS+nx;
+      const svc = this.meta[i] || SERVICES[0];
+      delete this.meta[i];
+      this.set(nx,ny,EMPTY);
+      this.pickedSvcs.push(svc); this.pickedSet[svc.code] = true; this.lastSvc = svc;
+      this.setState(s => {
+        const col = s.collected + 1;
+        if (col >= s.need) this.exitOpen = true;
+        return { collected: col, score: s.score + 100, last: svc.name };
+      });
+      this.flash = { x:nx, y:ny, t:1, c:svc.c };
+    }
+    if (t===DIRT) this.set(nx,ny,EMPTY);
+    if (t===EXIT || (this.exitOpen && nx===this.exit.x && ny===this.exit.y)){
+      this.player = { x:nx, y:ny };
+      this.nextLevel();
+      return;
+    }
+    this.player = { x:nx, y:ny };
+  }
+
+  nextLevel(){
+    const next = this.state.level + 1;
+    this.setState(s => ({ score: s.score + s.time * 10 }));
+    if (next >= LEVELS.length){ this.setState({ phase:'won' }); return; }
+    this.loadLevel(next);
+    this.setState({ phase:'play' });
+  }
+
+  die(reason){
+    this.shake = 14;
+    this.setState(s => {
+      const lives = s.lives - 1;
+      if (lives <= 0) return { lives:0, phase:'over', deathReason: reason };
+      setTimeout(() => { this.loadLevel(this.state.level); this.setState({ phase:'play' }); }, 60);
+      return { lives, deathReason: reason };
+    });
+  }
+
+  start(){
+    if (this.state.phase === 'won' || this.state.phase === 'over'){
+      this.setState({ score:0, lives:3 });
+      this.loadLevel(0);
+    }
+    this.setState({ phase:'play' });
+  }
+
+  drawRaccoon(ctx, px, py, s){
+    const map = [
+      '................',
+      '.KKK........KKK.',
+      '.KGGK......KGGK.',
+      '.KGGGGGGGGGGGGK.',
+      'KGGGGGGGGGGGGGGK',
+      'KGWWGGGGGGGGWWGK',
+      'KDDDDDDDDDDDDDDK',
+      'KDDMMDDDDDDMMDDK',
+      'KDDMMDDDDDDMMDDK',
+      '.KGGDDDDDDDDGGK.',
+      '..KGGWWWWWWGGK..',
+      '..KGWWWKKWWWGK..',
+      '...KWWWWWWWWK...',
+      '....KWWWWWWK....',
+      '.....KKKKKK.....',
+      '................'
+    ];
+    const pal = { K:'#0F1322', G:'#8A9099', W:'#FFFFFF', D:'#2B3040', M:'#5BC9B0' };
+    const u = s/16;
+    for (let y=0;y<16;y++) for (let x=0;x<16;x++){
+      const c = pal[map[y][x]];
+      if (!c) continue;
+      ctx.fillStyle = c;
+      ctx.fillRect(px + x*u, py + y*u, Math.ceil(u), Math.ceil(u));
+    }
+  }
+
+  // Pixel server rack/mainframe — replaces the plain boulder.
+  drawRack(ctx, X, Y, T){
+    ctx.fillStyle = '#1A2038';
+    ctx.fillRect(X+3, Y+3, T-6, T-6);
+    ctx.strokeStyle = '#2E3D6A'; ctx.lineWidth = 1;
+    ctx.strokeRect(X+3.5, Y+3.5, T-7, T-7);
+    const ru = 3, rh = 5, gap = 2, startY = Y+6;
+    for (let i=0;i<ru;i++){
+      const ry = startY + i*(rh+gap);
+      ctx.fillStyle = '#24304E';
+      ctx.fillRect(X+5, ry, T-10, rh);
+      ctx.fillStyle = '#3B4F82';
+      ctx.fillRect(X+5, ry, 3, rh);
+      // LED: middle rack has alert, rest OK
+      ctx.fillStyle = i===1 ? '#F24E4E' : '#5BC9B0';
+      ctx.fillRect(X+T-12, ry+1, 3, 3);
+    }
+    // ventilation slots at bottom
+    for (let s=0;s<4;s++){
+      ctx.fillStyle = '#131929';
+      ctx.fillRect(X+6+s*5, Y+T-9, 3, 3);
+    }
+  }
+
+  _buildGlyphCache(){
+    this.glyphCache = {};
+    const px = Math.floor(TILE / 16);
+    const sz = px * 16;
+    for (const svc of SERVICES){
+      const oc = document.createElement('canvas');
+      oc.width = sz; oc.height = sz;
+      const c = oc.getContext('2d');
+      c.imageSmoothingEnabled = false;
+      drawGlyph(c, svc.code, 0, 0, px, svc.c);
+      this.glyphCache[svc.code] = oc;
+    }
+  }
+
+  draw(){
+    const cv = this.cv; if (!cv) return;
+    const ctx = cv.getContext('2d');
+    const W = COLS*TILE, H = ROWS*TILE;
+    if (cv.width !== W){ cv.width = W; cv.height = H; }
+    ctx.save();
+    if (this.shake > 0){ ctx.translate((Math.random()-0.5)*this.shake, (Math.random()-0.5)*this.shake); this.shake *= 0.82; if (this.shake < 0.4) this.shake = 0; }
+    ctx.fillStyle = '#080B14'; ctx.fillRect(-20,-20,W+40,H+40);
+
+    const g = this.grid;
+    for (let y=0;y<ROWS;y++) for (let x=0;x<COLS;x++){
+      const t = g[y*COLS+x], X = x*TILE, Y = y*TILE;
+      if (t===STEEL){
+        ctx.fillStyle = '#151C31'; ctx.fillRect(X,Y,TILE,TILE);
+        ctx.strokeStyle = 'rgba(41,182,246,0.30)'; ctx.lineWidth = 1;
+        ctx.strokeRect(X+2.5,Y+2.5,TILE-5,TILE-5);
+      } else if (t===WALL){
+        ctx.fillStyle = '#232C48'; ctx.fillRect(X+1,Y+1,TILE-2,TILE-2);
+        ctx.fillStyle = 'rgba(255,255,255,0.05)'; ctx.fillRect(X+1,Y+1,TILE-2,3);
+      } else if (t===DIRT){
+        ctx.fillStyle = '#141B2E'; ctx.fillRect(X,Y,TILE,TILE);
+        ctx.fillStyle = 'rgba(91,201,176,0.09)';
+        for (let k=0;k<3;k++){
+          const ox = ((x*7+y*13+k*29) % 10) * 3 + 3;
+          const oy = ((x*11+y*5+k*17) % 10) * 3 + 3;
+          ctx.fillRect(X+ox, Y+oy, 2, 2);
+        }
+        ctx.strokeStyle = 'rgba(255,255,255,0.03)'; ctx.strokeRect(X+0.5,Y+0.5,TILE-1,TILE-1);
+      } else if (t===ROCK){
+        this.drawRack(ctx, X, Y, TILE);
+      } else if (t===GEM){
+        const svc = this.meta[y*COLS+x] || SERVICES[0];
+        ctx.save();
+        ctx.shadowColor = svc.c; ctx.shadowBlur = 12;
+        ctx.fillStyle = '#0E1626';
+        ctx.beginPath(); ctx.roundRect(X+3,Y+3,TILE-6,TILE-6,4); ctx.fill();
+        ctx.restore();
+        ctx.strokeStyle = svc.c; ctx.lineWidth = 2;
+        ctx.beginPath(); ctx.roundRect(X+3,Y+3,TILE-6,TILE-6,4); ctx.stroke();
+        const oc = this.glyphCache && this.glyphCache[svc.code];
+        if (oc){ const off=Math.floor((TILE-oc.width)/2); ctx.imageSmoothingEnabled=false; ctx.drawImage(oc,X+off,Y+off); }
+      }
+    }
+
+    // portal
+    const ex = this.exit.x*TILE, ey = this.exit.y*TILE;
+    const pulse = 0.5 + 0.5*Math.sin(performance.now()/260);
+    ctx.save();
+    if (this.exitOpen){
+      ctx.shadowColor = '#29B6F6'; ctx.shadowBlur = 10 + pulse*18;
+      ctx.strokeStyle = '#29B6F6'; ctx.lineWidth = 3;
+      ctx.beginPath(); ctx.roundRect(ex+3,ey+3,TILE-6,TILE-6,3); ctx.stroke();
+      ctx.fillStyle = 'rgba(41,182,246,' + (0.10 + pulse*0.22) + ')';
+      ctx.fillRect(ex+5,ey+5,TILE-10,TILE-10);
+    } else {
+      ctx.strokeStyle = 'rgba(41,182,246,0.22)'; ctx.lineWidth = 2;
+      ctx.setLineDash([4,4]);
+      ctx.strokeRect(ex+4,ey+4,TILE-8,TILE-8);
+    }
+    ctx.restore();
+
+    if (this.flash && this.flash.t > 0){
+      const f = this.flash;
+      ctx.save();
+      ctx.globalAlpha = f.t;
+      ctx.strokeStyle = f.c; ctx.lineWidth = 2;
+      const g2 = (1-f.t)*26;
+      ctx.strokeRect(f.x*TILE+3-g2/2, f.y*TILE+3-g2/2, TILE-6+g2, TILE-6+g2);
+      ctx.restore();
+      f.t -= 0.07;
+    }
+
+    const p = this.player;
+    ctx.save();
+    ctx.shadowColor = '#5BC9B0'; ctx.shadowBlur = 12;
+    this.drawRaccoon(ctx, p.x*TILE+2, p.y*TILE+2, TILE-4);
+    ctx.restore();
+    ctx.restore();
+
+    // HUD: glyph strip — 10 services in 2 rows of 5, lit = collected, dim = not yet
+    if (this.glyphStripCv){
+      const GW=16, GAP=2, COLS5=5, ROWS2=2;
+      const cw=(GW+GAP)*COLS5-GAP, ch=(GW+GAP)*ROWS2-GAP;
+      const gc=this.glyphStripCv;
+      if(gc.width!==cw){gc.width=cw; gc.height=ch;}
+      const gctx=gc.getContext('2d');
+      gctx.imageSmoothingEnabled=false;
+      gctx.clearRect(0,0,cw,ch);
+      SERVICES.forEach((svc,i)=>{
+        const col=i%COLS5, row=Math.floor(i/COLS5);
+        const sx=col*(GW+GAP), sy=row*(GW+GAP);
+        if(this.pickedSet && this.pickedSet[svc.code]){
+          drawGlyph(gctx, svc.code, sx, sy, 1, svc.c);
+        } else {
+          gctx.strokeStyle='rgba(108,114,133,0.35)'; gctx.lineWidth=1;
+          gctx.strokeRect(sx+0.5,sy+0.5,GW-1,GW-1);
+        }
+      });
+    }
+
+    // HUD: last collected service glyph
+    if (this.lastGlyphCv){
+      const lc=this.lastGlyphCv;
+      if(lc.width!==16){lc.width=16; lc.height=16;}
+      const lctx=lc.getContext('2d');
+      lctx.imageSmoothingEnabled=false;
+      lctx.clearRect(0,0,16,16);
+      if(this.lastSvc) drawGlyph(lctx, this.lastSvc.code, 0, 0, 1, this.lastSvc.c);
+    }
+  }
+
+  renderVals(){
+    const s = this.state;
+    const L = LEVELS[Math.min(s.level, LEVELS.length-1)];
+    const mm = String(Math.floor(s.time/60)).padStart(1,'0');
+    const ss = String(s.time%60).padStart(2,'0');
+    const over = {
+      intro:  { k:'BOULDER DASH · AZURE EDITION', t:'LEGACY DASH', b:'Dig through the tech debt, collect the Azure services, reach the portal. Monoliths fall the moment you dig out the ground beneath them, and they do not forgive. Three levels: sandbox, staging, production.', btn:'Start' },
+      paused: { k:'PAUSED', t:'HOLD', b:'Paused. Hit P or the button to resume.', btn:'Resume' },
+      over:   { k: s.deathReason || 'INCIDENT', t:'POST-MORTEM', b:'Out of retries. Score: ' + s.score + ' pts. Yes, this is a metaphor.', btn:'Start over' },
+      won:    { k:'ALL ENVIRONMENTS GREEN', t:'SHIPPED', b:'Production is up, services collected, budget delivered. Score: ' + s.score + ' pts.', btn:'Play again' }
+    };
+    const o = over[s.phase];
+    return {
+      canvasRef: (el) => { this.cv = el; },
+      glyphStripRef: (el) => { this.glyphStripCv = el; },
+      lastGlyphRef: (el) => { this.lastGlyphCv = el; },
+      levelName: L.name,
+      gemLabel: s.collected + ' / ' + s.need,
+      timeLabel: mm + ':' + ss,
+      timeColor: s.time < 30 ? '#F24E4E' : '#FFFFFF',
+      livesLabel: '× ' + s.lives,
+      lastPicked: s.last === '—' ? NOW : s.last,
+      hintLine: this.exitOpen ? 'portal open — bottom right corner' : 'collect every service to open the portal',
+      overlayDisplay: o ? 'flex' : 'none',
+      overlayKicker: o ? o.k : '',
+      overlayTitle: o ? o.t : '',
+      overlayBody: o ? o.b : '',
+      overlayButton: o ? o.btn : '',
+      onStart: () => this.start(),
+      onUp: () => { this.dir = 'up'; },
+      onDown: () => { this.dir = 'down'; },
+      onLeft: () => { this.dir = 'left'; },
+      onRight: () => { this.dir = 'right'; }
+    };
+  }
+}
+</script>
+<noscript>
+  <style>x-dc { display: block; font-family: Archivo, sans-serif; background: #0B0E18; color: #fff; padding: 40px; }</style>
+  <p><strong>Paweł Siwek</strong> — Principal Product Architect at Dynatrace · Microsoft Azure MVP. Azure Well-Architected Framework, cost optimization, mission-critical workloads, AI-driven observability. Based in Gdańsk, Poland. Legacy Dash game requires JavaScript.</p>
+</noscript>
+</body>
+</html>
