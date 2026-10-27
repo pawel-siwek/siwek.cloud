@@ -2,3 +2,4 @@ User-agent: *
 Allow: /
 
 Sitemap: https://siwek.cloud/sitemap.xml
+Sitemap: https://siwek.cloud/blog/sitemap-index.xml
