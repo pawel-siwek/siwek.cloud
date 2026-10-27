@@ -105,7 +105,7 @@ serve the standby build of the same commit. Don't leave it proxied for long, or 
 Decide whether the Cloudflare standby is still worth it. If not:
 
 - Delete the Worker `pawelsiwekslides` and its routes in Cloudflare.
-- Remove `wrangler.jsonc`, `public/_headers`, `public/_redirects`, `public/.assetsignore`, the
+- Remove `wrangler.jsonc`, `public/_headers`, `public/_redirects`, `public/.assetsignore`, the "Prepare the Azure upload" copy step (deploy `dist` directly), the
   *Deploy to Cloudflare* step in `.github/workflows/site.yml`, and the `CLOUDFLARE_*` secrets.
 
 ## Publishing posts

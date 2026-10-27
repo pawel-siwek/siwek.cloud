@@ -12,7 +12,8 @@ rm -rf dist
 cp -R public dist
 
 pushd blog >/dev/null
-if [[ "${CI:-}" == "true" || ! -d node_modules ]]; then
+if [[ ! -d node_modules ]]; then
+  # CI installs and verifies signatures in its own steps before this script runs.
   # --ignore-scripts: no dependency gets to run install hooks on the build machine.
   npm ci --ignore-scripts --no-audit --no-fund
 fi
