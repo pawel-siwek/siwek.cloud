@@ -52,7 +52,7 @@ Operational Excellence is mostly about not relying on memory. Content, config an
 
 The finding that made me laugh at myself was about the subscription. My personal Azure subscription comes with the MVP award. It's the obvious place for the site, and the wrong one. MVP benefits last as long as the award does, and the award has to be renewed. Credit-based subscriptions also have a [spending limit](https://learn.microsoft.com/en-us/azure/cost-management-billing/manage/spending-limit): when the credit runs out, "the services that you deployed are disabled for the rest of that billing period." A site that vanishes because a benefit expired is a resiliency failure with my name on it.
 
-So the blog gets its own pay-as-you-go subscription with a €1 budget alert. On a Free-plan site that alert should never fire. If it does, I want to know on day one.
+So the blog lives on the pay-as-you-go subscription I pay for myself, separate from the MVP benefits, with a €1 budget alert. On a Free-plan site that alert should never fire. If it does, I want to know on day one.
 
 Performance was the shortest discussion. It's static HTML, and Static Web Apps distributes static files globally on the Free plan too. The only JavaScript on a post page will be the comments widget, loaded lazily when you scroll to it. Legacy Dash remains the heaviest thing on the site, and I'm keeping it that way.
 
@@ -63,7 +63,7 @@ Performance was the shortest discussion. It's static HTML, and Static Web Apps d
 | Cost | €0 either way; Free has a hard 100 GB/month cap per subscription | Stay on Free, watch bandwidth |
 | Reliability | Over the cap the site stops being served; a proxy in front breaks certificate renewal; scheduled workflows die after 60 days without repo activity | DNS-only Cloudflare, warm standby on the old host; keepalive, failure issue, freshness check |
 | Security | Future-dated posts and previews are public; npm supply chain; no HSTS | Sensitive drafts stay private; lockfile, pinned actions, Dependabot; HSTS |
-| Operational Excellence | Hosting on the MVP subscription ties the site to the award | Bicep, PR previews, separate pay-as-you-go sub, €1 budget alert |
+| Operational Excellence | Hosting on the MVP subscription ties the site to the award | Bicep, PR previews, my own pay-as-you-go sub, €1 budget alert |
 | Performance | Static files, globally distributed | JavaScript only for comments, loaded lazily |
 
 None of these findings is dramatic. That's the point. Each is a small, quiet way for a "free static site" to go dark or leak something, and each is cheap to fix once it's written down.
