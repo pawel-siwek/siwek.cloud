@@ -1,0 +1,38 @@
+---
+import { render } from 'astro:content';
+import Base from '../layouts/Base.astro';
+import PostMeta from '../components/PostMeta.astro';
+import Share from '../components/Share.astro';
+import Comments from '../components/Comments.astro';
+import { SITE } from '../config';
+import { getPosts, type Post } from '../lib/posts';
+
+export async function getStaticPaths() {
+  const posts = await getPosts();
+  return posts.map((post) => ({ params: { slug: post.id }, props: { post } }));
+}
+
+interface Props { post: Post }
+const { post } = Astro.props;
+const { Content } = await render(post);
+const url = new URL(`/blog/${post.id}/`, SITE.url).href;
+---
+<Base
+  title={`${post.data.title} — siwek.cloud`}
+  description={post.data.description}
+  ogImage={`/blog/og/${post.id}.png`}
+  type="article"
+  publishedTime={post.data.date}
+>
+  <article class="post">
+    {post.data.session && <span class="kicker">From the talk: {post.data.session}</span>}
+    <h1 class="title">{post.data.title}</h1>
+    <PostMeta post={post} />
+    <div class="prose">
+      <Content />
+    </div>
+    <Share url={url} title={post.data.title} />
+    <Comments />
+    <a class="back" href="/blog/">← All posts</a>
+  </article>
+</Base>

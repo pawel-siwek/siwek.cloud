@@ -1,0 +1,19 @@
+version: 2
+updates:
+  - package-ecosystem: npm
+    directory: /blog
+    schedule:
+      interval: weekly
+    # Let new releases age a week before proposing them (supply-chain hygiene).
+    cooldown:
+      default-days: 7
+    groups:
+      astro:
+        patterns: ["astro", "@astrojs/*"]
+      og-image:
+        patterns: ["satori", "@resvg/*", "@fontsource/*"]
+
+  - package-ecosystem: github-actions
+    directory: /
+    schedule:
+      interval: weekly

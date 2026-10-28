@@ -1,0 +1,14 @@
+---
+import { TAG_LABELS } from '../config';
+import { formatDate, readingMinutes, type Post } from '../lib/posts';
+interface Props { post: Post }
+const { post } = Astro.props;
+const minutes = readingMinutes(post.body);
+const future = post.data.date.getTime() > Date.now();
+---
+<div class="meta">
+  {(post.data.draft || future) && <span class="badge-draft">{post.data.draft ? 'Draft' : 'Scheduled'}</span>}
+  <time datetime={post.data.date.toISOString()}>{formatDate(post.data.date)}</time>
+  <span>· {minutes} min read</span>
+  {post.data.tags.map((t) => <a class="tag" href={`/blog/tags/${t}/`}>{TAG_LABELS[t] ?? t}</a>)}
+</div>

@@ -1,0 +1,29 @@
+---
+import Base from '../layouts/Base.astro';
+import PostMeta from '../components/PostMeta.astro';
+import { SITE, TAG_LABELS } from '../config';
+import { TAGS } from '../content.config';
+import { getPosts } from '../lib/posts';
+const posts = await getPosts();
+---
+<Base title="Blog — siwek.cloud" description={SITE.description}>
+  <span class="kicker">Five-minute reads · from the talks</span>
+  <h1 class="title">The <span class="accent">blog</span></h1>
+  <p class="lead">{SITE.description}</p>
+  <div class="tag-filter">
+    {TAGS.map((t) => <a class="tag" href={`/blog/tags/${t}/`}>{TAG_LABELS[t]}</a>)}
+  </div>
+  {posts.length === 0 ? (
+    <p class="empty">The first post is in the pipeline. Follow the <a href="/blog/rss.xml">RSS feed</a> or <a href="https://www.linkedin.com/in/pawelsiwek/">LinkedIn</a> to catch it.</p>
+  ) : (
+    <ul class="post-list">
+      {posts.map((post) => (
+        <li class="post-card">
+          <PostMeta post={post} />
+          <h2><a href={`/blog/${post.id}/`}>{post.data.title}</a></h2>
+          <p>{post.data.description}</p>
+        </li>
+      ))}
+    </ul>
+  )}
+</Base>
